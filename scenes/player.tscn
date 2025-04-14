@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://bq3vftd4hwv26"]
+
+[ext_resource type="Script" uid="uid://bchgnsj8l8aqe" path="res://script/player.gd" id="1_g2brh"]
+[ext_resource type="Texture2D" uid="uid://bh0arcprifcq5" path="res://icon.svg" id="1_lj8jo"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2brh"]
+radius = 55.0
+height = 144.0
+
+[sub_resource type="Gradient" id="Gradient_md0e3"]
+offsets = PackedFloat32Array(0, 0.00526315, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.794737, 0.794737, 0.794737, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g2els"]
+gradient = SubResource("Gradient_md0e3")
+fill_to = Vector2(0.892593, 0)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_qhqgy"]
+polygon = PackedVector2Array(115, -8, 109, -11, 139, -4)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_dqkch"]
+polygon = PackedVector2Array(-14, 12, 15, 5, -17, 15)
+
+[node name="player" type="CharacterBody2D"]
+script = ExtResource("1_g2brh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2.38419e-07, 0)
+scale = Vector2(0.391601, 0.378906)
+texture = ExtResource("1_lj8jo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.32, 0.32)
+shape = SubResource("CapsuleShape2D_g2brh")
+metadata/_edit_lock_ = true
+
+[node name="light" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="light"]
+position = Vector2(-1, -2)
+scale = Vector2(19.1406, 6.29687)
+color = Color(0.996078, 0.992157, 1, 0.52549)
+energy = 2.42
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_g2els")
+metadata/_edit_lock_ = true
+
+[node name="LightOccluder2D1" type="LightOccluder2D" parent="light"]
+position = Vector2(-118, 9)
+occluder = SubResource("OccluderPolygon2D_qhqgy")
+metadata/_edit_lock_ = true
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="light"]
+position = Vector2(8, -15)
+occluder = SubResource("OccluderPolygon2D_dqkch")
+metadata/_edit_lock_ = true
