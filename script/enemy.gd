@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+# GDScript file for enemy AI behavior in a 2D game
+
 var speed = 150
 var vision_range = 300
 var alertness = 0
