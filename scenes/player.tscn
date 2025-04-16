@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://bh0arcprifcq5" path="res://icon.svg" id="1_lj8jo"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2brh"]
-radius = 55.0
-height = 144.0
+radius = 34.375
+height = 68.75
 
 [sub_resource type="Gradient" id="Gradient_md0e3"]
 offsets = PackedFloat32Array(0, 0.00526315, 1)
@@ -25,9 +25,10 @@ polygon = PackedVector2Array(-14, 12, 15, 5, -17, 15)
 script = ExtResource("1_g2brh")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(2.38419e-07, 0)
-scale = Vector2(0.391601, 0.378906)
+position = Vector2(1, 1.90735e-06)
+scale = Vector2(0.1958, 0.189453)
 texture = ExtResource("1_lj8jo")
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.32, 0.32)
