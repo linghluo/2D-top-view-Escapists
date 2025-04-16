@@ -22,6 +22,26 @@ polygon = PackedVector2Array(-14, 12, 15, 5, -17, 15)
 [node name="Enemy" type="CharacterBody2D"]
 script = ExtResource("1_md0e3")
 
+[node name="RayCast1" type="RayCast2D" parent="."]
+position = Vector2(5, -3)
+target_position = Vector2(539, -135)
+
+[node name="RayCast2" type="RayCast2D" parent="."]
+position = Vector2(7, 0)
+target_position = Vector2(521, 136)
+
+[node name="RayCast3" type="RayCast2D" parent="."]
+position = Vector2(12, -2)
+target_position = Vector2(528, 1)
+
+[node name="RayCast4" type="RayCast2D" parent="."]
+position = Vector2(1, -1)
+target_position = Vector2(537, -73)
+
+[node name="RayCast5" type="RayCast2D" parent="."]
+position = Vector2(0, -1)
+target_position = Vector2(537, 71)
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-8.76562, -1)
 scale = Vector2(0.159912, 0.328125)
@@ -30,28 +50,6 @@ texture = ExtResource("1_7p1mj")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-10, -1)
 shape = SubResource("CapsuleShape2D_md0e3")
-
-[node name="Vision" type="Node" parent="."]
-
-[node name="RayCast1" type="RayCast2D" parent="Vision"]
-position = Vector2(5, -3)
-target_position = Vector2(539, -135)
-
-[node name="RayCast2" type="RayCast2D" parent="Vision"]
-position = Vector2(7, 0)
-target_position = Vector2(521, 136)
-
-[node name="RayCast3" type="RayCast2D" parent="Vision"]
-position = Vector2(12, -2)
-target_position = Vector2(528, 1)
-
-[node name="RayCast4" type="RayCast2D" parent="Vision"]
-position = Vector2(1, -1)
-target_position = Vector2(537, -73)
-
-[node name="RayCast5" type="RayCast2D" parent="Vision"]
-position = Vector2(0, -1)
-target_position = Vector2(537, 71)
 
 [node name="light" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
