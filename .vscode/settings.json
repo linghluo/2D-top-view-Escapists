@@ -1,0 +1,14 @@
+{
+    "[plaintext]": {
+        "editor.wrappingIndent": "none",
+        "editor.autoIndent": "none",
+        "editor.wordWrap": "bounded",
+        "editor.wordWrapColumn": 180,
+        "editor.formatOnSave": false,
+        "files.trimTrailingWhitespace": false,
+        "files.insertFinalNewline": false,
+        "files.trimFinalNewlines": false,
+        "editor.renderWhitespace": "all",
+        "files.autoSave": "onFocusChange", //失去焦点后自动保存
+    }
+}
