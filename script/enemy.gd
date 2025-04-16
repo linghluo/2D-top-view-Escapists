@@ -4,6 +4,8 @@ var speed: float = 4500.0 # 速度
 var vision_range: float = 300.0 # 视野范围
 var max_alertness: float = 100.0 # 最大警觉度
 var chase_threshold: float = 80.0 # 追击阈值
+@export var alertness_upspeed: float = 1.0 # 警觉值增长速度
+@export var alertness_downspeed: float = 1.0 # 警戒值减少速度
 
 var player: CharacterBody2D = null # 初始化玩家引用
 var is_chasing: bool = false # 初始化是否正在追击
@@ -44,6 +46,14 @@ func move_towards(target_position: Vector2, delta: float):
 	var direction = (target_position - position).normalized()
 	velocity = direction * speed * delta
 	move_and_slide()
+
+# 警觉值增加方法
+func alert_up():
+	player.alertness += alertness_upspeed
+
+# 警戒值减少方法
+func alert_down():
+	player.alertness -= alertness_downspeed
 
 
 # func patrol():
