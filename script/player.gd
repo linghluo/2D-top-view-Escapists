@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
-@export var speed := 8000.0
+@export var speed: float = 8000.0 # 角色速度
+
+var alertness: float = 0 # 初始化警觉值
 
 func _physics_process(delta):
 	# 角色移动
