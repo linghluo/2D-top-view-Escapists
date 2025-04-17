@@ -56,3 +56,7 @@ metadata/_edit_lock_ = true
 position = Vector2(8, -15)
 occluder = SubResource("OccluderPolygon2D_dqkch")
 metadata/_edit_lock_ = true
+
+[node name="Timer_reset_alertness" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer_reset_alertness" to="." method="_on_timer_timeout"]
