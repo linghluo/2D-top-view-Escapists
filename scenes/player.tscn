@@ -13,6 +13,7 @@ colors = PackedColorArray(1, 1, 1, 1, 0.794737, 0.794737, 0.794737, 1, 0, 0, 0, 
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_g2els"]
 gradient = SubResource("Gradient_4ra3w")
+fill_to = Vector2(0.892593, 0)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_qhqgy"]
 polygon = PackedVector2Array(115, -8, 109, -11, 139, -4)

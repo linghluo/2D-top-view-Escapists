@@ -2,15 +2,15 @@ extends CharacterBody2D
 
 @export var speed: float = 8000.0 # 角色速度
 @export var alertness_downspeed: float = 2.0 # 警觉值下降速度
-var can_downalert: bool = true # 是否可以降低警戒
 
+var can_downalert: bool = true # 是否可以降低警戒
 var time_can_downalert: float = 0 # 记录重置可以下降警戒的时间
 var time_can_downalert_speed: float = 20.0 # 重置警戒时间的速度参数，单位为秒
 var alertness: float = 0 # 初始化警觉值
 
 func _ready() -> void:
 	# 警戒值重置计时器
-	$Timer_reset_alertness.wait_time = 20.0
+	$Timer_reset_alertness.wait_time = time_can_downalert_speed
 	$Timer_reset_alertness.start()
 
 func _physics_process(delta):
