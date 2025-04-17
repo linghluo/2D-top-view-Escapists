@@ -21,7 +21,7 @@ var state = State.initalize # 初始化状态机状态
 
 func _ready():
 	player = $"/root/Main/player"
-	raycasts = [$RayCast1, $RayCast2, $RayCast3, $RayCast4, $RayCast5]
+	raycasts = [$RayCast1, $RayCast2, $RayCast3, $RayCast4, $RayCast5, $RayCast6, $RayCast7, $RayCast8, $RayCast9]
 
 func _physics_process(delta):
 	distance_to_player = position.distance_to(player.position) # 获取self与玩家距离值
@@ -35,6 +35,8 @@ func _physics_process(delta):
 			print("initalize")
 		State.chasing:
 			move_towards(last_seen_position, delta)
+			tag_loss = 0
+			time_loss = 0.0
 			print("chasing")
 		State.searching:
 			loss_vision(last_seen_position, delta)
@@ -58,12 +60,11 @@ func _physics_process(delta):
 		# 如果原来是 chasing 状态，现在看不到玩家了，就转为searching
 		if state == State.chasing:
 			state = State.searching
-
-
-	# 跟丢了
 	
 	# 测试警戒值变化速率
 	print("Alertness: ", player.alertness)
+	print("tag_loss", tag_loss)
+	print("time_loss", time_loss)
 
 # 警觉值增加方法
 func alert_up(delta: float):
@@ -102,7 +103,7 @@ func loss_vision(target_position: Vector2, delta: float):
 				target_rotation = rotation + deg_to_rad(90)
 			rotation = lerp_angle(rotation, target_rotation, 2 * delta)
 			time_loss += delta
-			if abs(rotation - target_rotation) < 0.1 or time_loss >= 5.0:
+			if abs(rotation - target_rotation) < 0.1 and time_loss >= 5.0:
 				tag_loss = 2
 				time_loss = 0.0
 
@@ -113,7 +114,7 @@ func loss_vision(target_position: Vector2, delta: float):
 				target_rotation = rotation - deg_to_rad(180)
 			rotation = lerp_angle(rotation, target_rotation, 2 * delta)
 			time_loss += delta
-			if abs(rotation - target_rotation) < 0.1 or time_loss >= 10.0:
+			if abs(rotation - target_rotation) < 0.1 and time_loss >= 10.0:
 				tag_loss = 3
 				time_loss = 0.0
 

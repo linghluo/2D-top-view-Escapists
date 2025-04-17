@@ -15,7 +15,6 @@ texture = ExtResource("3_sugp2")
 metadata/_edit_lock_ = true
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
-visible = false
 blend_mode = 1
 metadata/_edit_lock_ = true
 
