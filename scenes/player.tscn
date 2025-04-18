@@ -1,7 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://bq3vftd4hwv26"]
+[gd_scene load_steps=10 format=3 uid="uid://bq3vftd4hwv26"]
 
 [ext_resource type="Script" uid="uid://bchgnsj8l8aqe" path="res://script/player.gd" id="1_g2brh"]
 [ext_resource type="Texture2D" uid="uid://bh0arcprifcq5" path="res://icon.svg" id="1_lj8jo"]
+[ext_resource type="Shader" uid="uid://cdg1d1knr0jvy" path="res://shader/player_Afterimage.gdshader" id="2_qhqgy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qhqgy"]
+shader = ExtResource("2_qhqgy")
+shader_parameter/time = 0.0
+shader_parameter/glow_color = Color(1, 0.5, 1, 1)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2brh"]
 radius = 34.375
@@ -24,7 +30,13 @@ polygon = PackedVector2Array(-14, 12, 15, 5, -17, 15)
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("1_g2brh")
 
+[node name="AfterImage" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_qhqgy")
+scale = Vector2(0.146, 0.146)
+texture = ExtResource("1_lj8jo")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
+use_parent_material = true
 position = Vector2(1, 1.90735e-06)
 scale = Vector2(0.1958, 0.189453)
 texture = ExtResource("1_lj8jo")
@@ -54,5 +66,7 @@ occluder = SubResource("OccluderPolygon2D_qhqgy")
 [node name="LightOccluder2D2" type="LightOccluder2D" parent="light"]
 position = Vector2(8, -15)
 occluder = SubResource("OccluderPolygon2D_dqkch")
+
+[node name="CPUParticles_dash" type="CPUParticles2D" parent="."]
 
 [connection signal="timeout" from="Timer_reset_alertness" to="." method="_on_timer_timeout"]

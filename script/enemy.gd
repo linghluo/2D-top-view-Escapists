@@ -24,6 +24,8 @@ func _ready():
 	raycasts = [$RayCast1, $RayCast2, $RayCast3, $RayCast4, $RayCast5, $RayCast6, $RayCast7, $RayCast8, $RayCast9]
 
 func _physics_process(delta):
+	# 测试警戒值变化速率
+	# print("Alertness: ", player.alertness)
 	distance_to_player = position.distance_to(player.position) # 获取self与玩家距离值
 	# 实现转向
 	if velocity.length() > 0.1:
@@ -32,7 +34,7 @@ func _physics_process(delta):
 	match state:
 		State.initalize:
 			initalize()
-			print("initalize")
+			# print("initalize")
 		State.chasing:
 			move_towards(last_seen_position, delta)
 			tag_loss = 0
@@ -60,11 +62,6 @@ func _physics_process(delta):
 		# 如果原来是 chasing 状态，现在看不到玩家了，就转为searching
 		if state == State.chasing:
 			state = State.searching
-	
-	# 测试警戒值变化速率
-	print("Alertness: ", player.alertness)
-	print("tag_loss", tag_loss)
-	print("time_loss", time_loss)
 
 # 警觉值增加方法
 func alert_up(delta: float):
