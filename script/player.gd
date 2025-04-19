@@ -32,7 +32,11 @@ func _ready() -> void:
 	$Timer_reset_alertness.wait_time = time_can_downalert_speed
 	$Timer_reset_alertness.start()
 
+func _on_timer_reset_alertness_timeout() -> void:
+	can_downalert = true
+
 func _physics_process(delta: float) -> void:
+	print("alertness: ", alertness)
 	# 清空速度（更好的速度管理）
 	velocity = Vector2.ZERO
 
@@ -116,7 +120,8 @@ func _on_Timer_reset_alertness_timeout() -> void:
 	can_downalert = true
 
 func alert_down(delta: float) -> void:
-	alertness = max(alertness - alertness_downspeed * delta, 0.0)
+	alertness -= alertness_downspeed * delta
+	alertness = max(alertness, 0.0)
 
 # 残影相关
 func spawn_afterimage() -> void:
@@ -137,3 +142,5 @@ func spawn_afterimage() -> void:
 	var t := create_tween()
 	t.tween_property(mat, "shader_parameter/time", 1.0, 0.5) # 渐变持续时间
 	t.tween_callback(Callable(afterimage, "queue_free"))
+
+

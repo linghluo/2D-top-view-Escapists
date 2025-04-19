@@ -69,4 +69,4 @@ occluder = SubResource("OccluderPolygon2D_dqkch")
 
 [node name="CPUParticles_dash" type="CPUParticles2D" parent="."]
 
-[connection signal="timeout" from="Timer_reset_alertness" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Timer_reset_alertness" to="." method="_on_timer_reset_alertness_timeout"]

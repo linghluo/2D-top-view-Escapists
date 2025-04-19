@@ -108,7 +108,7 @@ func loss_vision(target_position: Vector2, delta: float):
 			velocity = Vector2.ZERO
 			move_and_slide()
 			if time_loss == 0.0:
-				target_rotation = rotation - deg_to_rad(180)
+				target_rotation = rotation + deg_to_rad(180)
 			rotation = lerp_angle(rotation, target_rotation, 2 * delta)
 			time_loss += delta
 			if abs(rotation - target_rotation) < 0.1 and time_loss >= 10.0:
