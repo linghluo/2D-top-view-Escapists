@@ -31,6 +31,8 @@ func _ready() -> void:
 	# 警觉值重置定时器
 	$Timer_reset_alertness.wait_time = time_can_downalert_speed
 	$Timer_reset_alertness.start()
+	# 冲刺蓄力粒子初始化
+	charge_particles.emitting = false
 
 func _on_timer_reset_alertness_timeout() -> void:
 	can_downalert = true
@@ -142,5 +144,3 @@ func spawn_afterimage() -> void:
 	var t := create_tween()
 	t.tween_property(mat, "shader_parameter/time", 1.0, 0.5) # 渐变持续时间
 	t.tween_callback(Callable(afterimage, "queue_free"))
-
-

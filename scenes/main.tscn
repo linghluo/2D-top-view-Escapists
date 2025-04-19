@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dukca71mfgm5q"]
+[gd_scene load_steps=7 format=3 uid="uid://dukca71mfgm5q"]
 
 [ext_resource type="PackedScene" uid="uid://bq3vftd4hwv26" path="res://scenes/player.tscn" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://uah0agrxr5q6" path="res://scenes/map_testing.tscn" id="1_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://dj3pes45dip6o" path="res://scenes/enemy.tscn" id="2_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://ciarrw1bmn6ok" path="res://src/yuka遺跡１F_1b.png" id="3_sugp2"]
-[ext_resource type="Script" path="res://script/camera001.gd" id="4_jyhfs"]
+[ext_resource type="Script" uid="uid://dehdi1dk1ymfs" path="res://script/camera001.gd" id="4_jyhfs"]
 
 [sub_resource type="Environment" id="Environment_jyhfs"]
 ambient_light_sky_contribution = 0.0
@@ -21,13 +22,17 @@ glow_hdr_threshold = 0.22
 [node name="Main" type="Node2D"]
 metadata/_edit_lock_ = true
 
+[node name="TileMapLayer" parent="." instance=ExtResource("1_tbgi4")]
+
 [node name="background" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(230, -445)
 scale = Vector2(1.42644, 1.42644)
 texture = ExtResource("3_sugp2")
 metadata/_edit_lock_ = true
 
-[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+[node name="GlobalLight2D" type="DirectionalLight2D" parent="."]
+visible = false
 color = Color(1, 1, 1, 0.733333)
 energy = 1.35
 blend_mode = 1
@@ -38,15 +43,15 @@ position = Vector2(210, 647)
 rotation = -1.54462
 
 [node name="Enemy" parent="." instance=ExtResource("2_0wfyh")]
-position = Vector2(-224, 267)
+position = Vector2(80, 510)
 metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(257, 160)
-limit_left = -1015
-limit_top = -1580
-limit_right = 1485
-limit_bottom = 695
+position = Vector2(1963, 437)
+limit_left = 0
+limit_top = 0
+limit_right = 3295
+limit_bottom = 1090
 script = ExtResource("4_jyhfs")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
