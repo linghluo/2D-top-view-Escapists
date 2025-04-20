@@ -1,8 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://bq3vftd4hwv26"]
+[gd_scene load_steps=16 format=3 uid="uid://bq3vftd4hwv26"]
 
 [ext_resource type="Script" uid="uid://bchgnsj8l8aqe" path="res://script/player.gd" id="1_g2brh"]
 [ext_resource type="Texture2D" uid="uid://bh0arcprifcq5" path="res://icon.svg" id="1_lj8jo"]
 [ext_resource type="Shader" uid="uid://cdg1d1knr0jvy" path="res://shader/player_Afterimage.gdshader" id="2_qhqgy"]
+[ext_resource type="Shader" uid="uid://dwtsx4ytsjjs8" path="res://shader/Water_dash.gdshader" id="4_fjrip"]
+[ext_resource type="Texture2D" uid="uid://3edcpkyy051q" path="res://src/shader_src/Water_effect.png" id="5_smehm"]
+[ext_resource type="Shader" uid="uid://beflbtfvtf0qo" path="res://shader/Cooling_dash.gdshader" id="6_ur7pv"]
+[ext_resource type="Texture2D" uid="uid://cd81ystqww1cn" path="res://src/shader_src/dash_icon.png" id="7_y4r1p"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qhqgy"]
 shader = ExtResource("2_qhqgy")
@@ -27,6 +31,15 @@ polygon = PackedVector2Array(115, -8, 109, -11, 139, -4)
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_dqkch"]
 polygon = PackedVector2Array(-14, 12, 15, 5, -17, 15)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3v2ag"]
+shader = ExtResource("6_ur7pv")
+shader_parameter/progress = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d2wvv"]
+shader = ExtResource("4_fjrip")
+shader_parameter/progress = 0.0
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("1_g2brh")
 
@@ -34,6 +47,7 @@ script = ExtResource("1_g2brh")
 material = SubResource("ShaderMaterial_qhqgy")
 scale = Vector2(0.146, 0.146)
 texture = ExtResource("1_lj8jo")
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 use_parent_material = true
@@ -50,6 +64,7 @@ metadata/_edit_lock_ = true
 [node name="Timer_reset_alertness" type="Timer" parent="."]
 
 [node name="light" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="light"]
 position = Vector2(-1, -2.49999)
@@ -58,15 +73,27 @@ color = Color(1, 1, 1, 0.360784)
 energy = 1.7
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_g2els")
+metadata/_edit_lock_ = true
 
 [node name="LightOccluder2D1" type="LightOccluder2D" parent="light"]
 position = Vector2(-118, 9)
 occluder = SubResource("OccluderPolygon2D_qhqgy")
+metadata/_edit_lock_ = true
 
 [node name="LightOccluder2D2" type="LightOccluder2D" parent="light"]
 position = Vector2(8, -15)
 occluder = SubResource("OccluderPolygon2D_dqkch")
+metadata/_edit_lock_ = true
 
 [node name="CPUParticles_dash" type="CPUParticles2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Cooling_dash" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_3v2ag")
+texture = ExtResource("7_y4r1p")
+
+[node name="Water_dash" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_d2wvv")
+texture = ExtResource("5_smehm")
 
 [connection signal="timeout" from="Timer_reset_alertness" to="." method="_on_timer_reset_alertness_timeout"]
