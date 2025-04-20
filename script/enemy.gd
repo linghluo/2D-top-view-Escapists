@@ -97,7 +97,7 @@ func initalize():
 # 跟丢啦！！状态函数
 func loss_vision(target_position: Vector2, delta: float):
 	var distance_to_target = position.distance_to(target_position)
-	var target_loss = 10.0 # 允许接近目标的距离（可调）
+	var target_loss = 5.0 # 允许接近目标的距离（可调）
 
 	match tag_loss:
 		0:

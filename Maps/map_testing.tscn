@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=4 uid="uid://bnn7xopntirjl"]
 
-[ext_resource type="TileSet" uid="uid://blm1ep0wjmrss" path="res://src/maptile_set/base1_tile_set.tres" id="1_l3p88"]
-[ext_resource type="TileSet" uid="uid://emwgflt5sv06" path="res://src/maptile_set/base2_tile_set.tres" id="2_1kqrn"]
+[ext_resource type="TileSet" uid="uid://bi0abeoks4y1t" path="res://src/maptile_set/base1_tile_set.tres" id="1_l3p88"]
+[ext_resource type="TileSet" uid="uid://cwxkfb6okusn4" path="res://src/maptile_set/base2_tile_set.tres" id="2_1kqrn"]
 
 [node name="Map_testing" type="Node2D"]
 
