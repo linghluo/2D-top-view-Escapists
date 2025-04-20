@@ -1,9 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dukca71mfgm5q"]
+[gd_scene load_steps=6 format=4 uid="uid://dukca71mfgm5q"]
 
 [ext_resource type="PackedScene" uid="uid://bq3vftd4hwv26" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://uah0agrxr5q6" path="res://scenes/map_testing.tscn" id="1_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://dj3pes45dip6o" path="res://scenes/enemy.tscn" id="2_0wfyh"]
-[ext_resource type="Script" uid="uid://dehdi1dk1ymfs" path="res://script/camera001.gd" id="4_jyhfs"]
+[ext_resource type="Script" path="res://script/camera001.gd" id="4_jyhfs"]
 
 [sub_resource type="Environment" id="Environment_jyhfs"]
 ambient_light_sky_contribution = 0.0
@@ -23,18 +23,28 @@ metadata/_edit_lock_ = true
 
 [node name="TileMapLayer" parent="." instance=ExtResource("1_tbgi4")]
 
+[node name="TileMapLayer3" parent="." instance=ExtResource("1_tbgi4")]
+tile_map_data = PackedByteArray("AAAMABEAGAAAAAAAAAAMABAAGAAAAAAAAAAMAA8AGAAAAAAAAAAMAA4AGAAAAAAAAAAMAA0AGAAAAAAAAAAMAAwAGAAAAAAAAAA=")
+
 [node name="GlobalLight2D" type="DirectionalLight2D" parent="."]
+visible = false
 color = Color(1, 1, 1, 0.733333)
 energy = 1.35
 blend_mode = 1
 metadata/_edit_lock_ = true
 
 [node name="player" parent="." instance=ExtResource("1_o5qli")]
-position = Vector2(210, 647)
+position = Vector2(498, 546)
 rotation = -1.54462
+collision_layer = 3
+collision_mask = 2
+motion_mode = 1
+wall_min_slide_angle = 0.0
 
 [node name="Enemy" parent="." instance=ExtResource("2_0wfyh")]
-position = Vector2(80, 510)
+position = Vector2(292, 490)
+collision_layer = 3
+collision_mask = 2
 metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]

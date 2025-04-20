@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var navigation_agent_2d: NavigationAgent2D = $NavigationAgent2D # 导航代理 
+
 var speed: float = 2000.0 # 速度
 var vision_range: float = 300.0 # 视野范围
 var max_alertness: float = 100.0 # 最大警觉度
@@ -28,8 +30,9 @@ func _physics_process(delta):
 	# print("Alertness: ", player.alertness)
 	distance_to_player = position.distance_to(player.position) # 获取self与玩家距离值
 	# 实现转向
-	if velocity.length() > 0.1:
-		rotation = velocity.angle()
+	if state != State.chasing:
+		if velocity.length() > 0.1:
+			rotation = velocity.angle()
 	# 状态机匹配放置
 	match state:
 		State.initalize:
@@ -37,6 +40,10 @@ func _physics_process(delta):
 			# print("initalize")
 		State.chasing:
 			move_towards(last_seen_position, delta)
+			var mp = last_seen_position
+			var ang = (mp - global_position).angle()
+			if abs(angle_difference(rotation, ang)) > 0.1:
+				rotation = lerp_angle(rotation, ang, 10 * delta)
 			tag_loss = 0
 			time_loss = 0.0
 			print("chasing")
@@ -71,9 +78,17 @@ func alert_up(delta: float):
 
 # 追击函数
 func move_towards(target_position: Vector2, delta: float):
-	var direction = (target_position - position).normalized() # 计算目标方向
-	velocity = direction * speed * delta # 设置速度方向
-	move_and_slide() # 执行移动
+	navigation_agent_2d.target_position = target_position
+
+	var current_agent_position = global_position
+	var next_path_position = navigation_agent_2d.get_next_path_position()
+	var new_velocity = current_agent_position.direction_to(next_path_position) * speed * delta
+
+	if navigation_agent_2d.avoidance_enabled:
+		navigation_agent_2d.set_velocity(new_velocity)
+	else:
+		_on_navigation_agent_2d_velocity_computed(new_velocity)
+	move_and_slide()
 
 # 自然状态函数
 func initalize():
@@ -121,3 +136,8 @@ func loss_vision(target_position: Vector2, delta: float):
 			state = State.initalize
 			tag_loss = 0
 			time_loss = 0.0
+
+
+func _on_navigation_agent_2d_velocity_computed(safe_velocity:Vector2) -> void:
+	
+	velocity = safe_velocity

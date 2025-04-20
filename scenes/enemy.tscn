@@ -3,8 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bh0arcprifcq5" path="res://icon.svg" id="1_7p1mj"]
 [ext_resource type="Script" uid="uid://bqklqg1nx0k5w" path="res://script/enemy.gd" id="1_md0e3"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_md0e3"]
-height = 50.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_md0e3"]
 
 [sub_resource type="Gradient" id="Gradient_md0e3"]
 offsets = PackedFloat32Array(0, 0.00526315, 1)
@@ -20,43 +19,54 @@ polygon = PackedVector2Array(115, -8, 109, -11, 139, -4)
 polygon = PackedVector2Array(-14, 12, 15, 5, -17, 15)
 
 [node name="Enemy" type="CharacterBody2D"]
+motion_mode = 1
+wall_min_slide_angle = 0.0
 script = ExtResource("1_md0e3")
 
 [node name="RayCast1" type="RayCast2D" parent="."]
 position = Vector2(5, -3)
 target_position = Vector2(295, -82)
+collision_mask = 2
 
 [node name="RayCast2" type="RayCast2D" parent="."]
 position = Vector2(7, 0)
 target_position = Vector2(285, 85)
+collision_mask = 2
 
 [node name="RayCast3" type="RayCast2D" parent="."]
 position = Vector2(12, -2)
 target_position = Vector2(311, 3)
+collision_mask = 2
 
 [node name="RayCast4" type="RayCast2D" parent="."]
 position = Vector2(1, -1)
 target_position = Vector2(313, -43)
+collision_mask = 2
 
 [node name="RayCast5" type="RayCast2D" parent="."]
 position = Vector2(0, -1)
 target_position = Vector2(312, 44)
+collision_mask = 2
 
 [node name="RayCast6" type="RayCast2D" parent="."]
 position = Vector2(1, -10)
 target_position = Vector2(308, -54)
+collision_mask = 2
 
 [node name="RayCast7" type="RayCast2D" parent="."]
 position = Vector2(2, 4)
 target_position = Vector2(319, 20)
+collision_mask = 2
 
 [node name="RayCast8" type="RayCast2D" parent="."]
 position = Vector2(3, -6)
 target_position = Vector2(313, -16)
+collision_mask = 2
 
 [node name="RayCast9" type="RayCast2D" parent="."]
 position = Vector2(1, 8)
 target_position = Vector2(300, 56)
+collision_mask = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-8.76562, -1)
@@ -66,7 +76,8 @@ metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-10, -1)
-shape = SubResource("CapsuleShape2D_md0e3")
+scale = Vector2(2, 2)
+shape = SubResource("CircleShape2D_md0e3")
 metadata/_edit_lock_ = true
 
 [node name="light" type="Node2D" parent="."]
@@ -86,3 +97,14 @@ occluder = SubResource("OccluderPolygon2D_md0e3")
 [node name="LightOccluder2D2" type="LightOccluder2D" parent="light"]
 position = Vector2(8, -15)
 occluder = SubResource("OccluderPolygon2D_4ra3w")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 5.0
+target_desired_distance = 5.0
+path_postprocessing = 1
+avoidance_enabled = true
+debug_enabled = true
+debug_use_custom = true
+debug_path_custom_color = Color(1, 0.00392157, 0, 1)
+
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
