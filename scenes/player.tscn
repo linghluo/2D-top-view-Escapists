@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bq3vftd4hwv26"]
+[gd_scene load_steps=18 format=3 uid="uid://bq3vftd4hwv26"]
 
 [ext_resource type="Script" uid="uid://bchgnsj8l8aqe" path="res://script/player.gd" id="1_g2brh"]
 [ext_resource type="Texture2D" uid="uid://bh0arcprifcq5" path="res://icon.svg" id="1_lj8jo"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://3edcpkyy051q" path="res://src/shader_src/Water_effect.png" id="5_smehm"]
 [ext_resource type="Shader" path="res://shader/Cooling_dash.gdshader" id="6_ur7pv"]
 [ext_resource type="Texture2D" uid="uid://cd81ystqww1cn" path="res://src/shader_src/dash_icon.png" id="7_y4r1p"]
+[ext_resource type="Script" uid="uid://d2dqhtfb4627q" path="res://script/Hitbox.gd" id="8_smehm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qhqgy"]
 shader = ExtResource("2_qhqgy")
@@ -40,7 +41,12 @@ shader = ExtResource("4_fjrip")
 shader_parameter/progress = 0.0
 shader_parameter/tint_color = Color(1, 1, 1, 1)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ur7pv"]
+size = Vector2(50, 34)
+
 [node name="player" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 7
 script = ExtResource("1_g2brh")
 
 [node name="AfterImage" type="Sprite2D" parent="."]
@@ -57,6 +63,7 @@ texture = ExtResource("1_lj8jo")
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 scale = Vector2(0.32, 0.32)
 shape = SubResource("CapsuleShape2D_g2brh")
 metadata/_edit_lock_ = true
@@ -64,6 +71,7 @@ metadata/_edit_lock_ = true
 [node name="Timer_reset_alertness" type="Timer" parent="."]
 
 [node name="light" type="Node2D" parent="."]
+visible = false
 metadata/_edit_lock_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="light"]
@@ -89,11 +97,22 @@ metadata/_edit_lock_ = true
 metadata/_edit_lock_ = true
 
 [node name="Cooling_dash" type="Sprite2D" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_3v2ag")
 texture = ExtResource("7_y4r1p")
 
 [node name="Water_dash" type="Sprite2D" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_d2wvv")
 texture = ExtResource("5_smehm")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+script = ExtResource("8_smehm")
+metadata/_custom_type_script = "uid://d2dqhtfb4627q"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("RectangleShape2D_ur7pv")
 
 [connection signal="timeout" from="Timer_reset_alertness" to="." method="_on_timer_reset_alertness_timeout"]

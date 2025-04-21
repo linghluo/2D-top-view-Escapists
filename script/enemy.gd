@@ -46,10 +46,10 @@ func _physics_process(delta):
 				rotation = lerp_angle(rotation, ang, 10 * delta)
 			tag_loss = 0
 			time_loss = 0.0
-			print("chasing")
+			# print("chasing")
 		State.searching:
 			loss_vision(last_seen_position, delta)
-			print("searching")
+			# print("searching")
 	# 检测玩家是否在视野范围以内
 	player_visible = false
 	for raycast in raycasts:
