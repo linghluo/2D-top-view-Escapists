@@ -53,6 +53,9 @@ func _physics_process(delta: float) -> void:
 		State.normal:
 			var dir = get_input_dir()
 			velocity = dir * normal_speed
+			# 正常行走噪音
+			if dir != Vector2.ZERO:
+				make_noise(global_position, 100.0)
 			if Input.is_action_pressed("p_sneak"):
 				state = State.sneak
 			elif Input.is_action_just_pressed("p_dash") and dash_timer <= 0.0:
@@ -106,6 +109,8 @@ func _physics_process(delta: float) -> void:
 			if global_position.distance_to(dash_start_pos) >= dash_distance:
 				state = State.normal
 				velocity = Vector2.ZERO
+			# 冲刺噪音
+			make_noise(global_position, 500.0)
 			# 残影
 			ghost_timer -= delta
 			if ghost_timer <= 0.0:
@@ -150,6 +155,13 @@ func _on_Timer_reset_alertness_timeout() -> void:
 func alert_down(delta: float) -> void:
 	alertness -= alertness_downspeed * delta
 	alertness = max(alertness, 0.0)
+
+# 玩家发出噪音
+func make_noise(target_position: Vector2, noise_strength: float):
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		enemy.hear_noise(target_position, noise_strength)
+
+# ===== 以下是动画相关函数 =====
 
 # 残影相关
 func spawn_afterimage() -> void:
