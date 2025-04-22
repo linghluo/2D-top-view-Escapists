@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dj3pes45dip6o"]
+[gd_scene load_steps=10 format=3 uid="uid://dj3pes45dip6o"]
 
 [ext_resource type="Texture2D" uid="uid://bh0arcprifcq5" path="res://icon.svg" id="1_7p1mj"]
 [ext_resource type="Script" uid="uid://bqklqg1nx0k5w" path="res://script/enemy.gd" id="1_md0e3"]
+[ext_resource type="Script" uid="uid://b4nyos4p6of2k" path="res://script/Hurtbox.gd" id="3_4ra3w"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_md0e3"]
 
@@ -18,52 +19,66 @@ polygon = PackedVector2Array(115, -8, 109, -11, 139, -4)
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_4ra3w"]
 polygon = PackedVector2Array(-14, 12, 15, 5, -17, 15)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_5uy6h"]
+radius = 23.0
+
 [node name="Enemy" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 11
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_md0e3")
 
 [node name="RayCast1" type="RayCast2D" parent="."]
+visible = false
 position = Vector2(5, -3)
 target_position = Vector2(295, -82)
 collision_mask = 2
 
 [node name="RayCast2" type="RayCast2D" parent="."]
+visible = false
 position = Vector2(7, 0)
 target_position = Vector2(285, 85)
 collision_mask = 2
 
 [node name="RayCast3" type="RayCast2D" parent="."]
+visible = false
 position = Vector2(12, -2)
 target_position = Vector2(311, 3)
 collision_mask = 2
 
 [node name="RayCast4" type="RayCast2D" parent="."]
+visible = false
 position = Vector2(1, -1)
 target_position = Vector2(313, -43)
 collision_mask = 2
 
 [node name="RayCast5" type="RayCast2D" parent="."]
+visible = false
 position = Vector2(0, -1)
 target_position = Vector2(312, 44)
 collision_mask = 2
 
 [node name="RayCast6" type="RayCast2D" parent="."]
+visible = false
 position = Vector2(1, -10)
 target_position = Vector2(308, -54)
 collision_mask = 2
 
 [node name="RayCast7" type="RayCast2D" parent="."]
+visible = false
 position = Vector2(2, 4)
 target_position = Vector2(319, 20)
 collision_mask = 2
 
 [node name="RayCast8" type="RayCast2D" parent="."]
+visible = false
 position = Vector2(3, -6)
 target_position = Vector2(313, -16)
 collision_mask = 2
 
 [node name="RayCast9" type="RayCast2D" parent="."]
+visible = false
 position = Vector2(1, 8)
 target_position = Vector2(300, 56)
 collision_mask = 2
@@ -75,12 +90,14 @@ texture = ExtResource("1_7p1mj")
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-10, -1)
 scale = Vector2(2, 2)
 shape = SubResource("CircleShape2D_md0e3")
 metadata/_edit_lock_ = true
 
 [node name="light" type="Node2D" parent="."]
+visible = false
 
 [node name="PointLight2D" type="PointLight2D" parent="light"]
 position = Vector2(-1, -2.49999)
@@ -106,5 +123,15 @@ avoidance_enabled = true
 debug_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(1, 0.00392157, 0, 1)
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("3_4ra3w")
+metadata/_custom_type_script = "uid://b4nyos4p6of2k"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(-9, -1)
+shape = SubResource("CircleShape2D_5uy6h")
 
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]

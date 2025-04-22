@@ -58,6 +58,16 @@ p_dash={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Floor_white"
+2d_navigation/layer_1="floor_white"
+2d_physics/layer_2="Wall_black"
+2d_physics/layer_3="Enemy"
+2d_physics/layer_4="Player"
+2d_physics/layer_5="PlayerHurtbox"
+2d_physics/layer_6="EnemyHurtbox"
+
 [rendering]
 
 viewport/hdr_2d=true
