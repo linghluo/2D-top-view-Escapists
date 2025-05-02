@@ -44,7 +44,7 @@ func _on_timer_reset_alertness_timeout() -> void:
 	can_downalert = true
 
 func _physics_process(delta: float) -> void:
-	# print("alertness: ", alertness)
+	print("alertness: ", alertness)
 	# 清空速度（更好的速度管理）
 	velocity = Vector2.ZERO
 

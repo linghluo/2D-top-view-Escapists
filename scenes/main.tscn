@@ -24,13 +24,14 @@ metadata/_edit_lock_ = true
 [node name="Map" parent="." instance=ExtResource("1_jyhfs")]
 
 [node name="GlobalLight2D" type="DirectionalLight2D" parent="."]
+visible = false
 color = Color(1, 1, 1, 0.733333)
 energy = 1.35
 blend_mode = 1
 metadata/_edit_lock_ = true
 
 [node name="player" parent="." instance=ExtResource("1_o5qli")]
-position = Vector2(498, 546)
+position = Vector2(476, 405)
 rotation = -1.54462
 collision_layer = 3
 collision_mask = 2
@@ -38,7 +39,7 @@ motion_mode = 1
 wall_min_slide_angle = 0.0
 
 [node name="Enemy" parent="." instance=ExtResource("2_0wfyh")]
-position = Vector2(139, 484)
+position = Vector2(187, 328)
 collision_layer = 3
 collision_mask = 2
 
