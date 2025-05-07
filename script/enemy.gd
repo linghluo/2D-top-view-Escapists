@@ -46,7 +46,6 @@ func _physics_process(delta):
 		State.initalize:
 			speed = normal_speed
 			initalize_Static()
-			print("initalize")
 
 		State.chasing:
 			speed = chase_speed
@@ -55,12 +54,10 @@ func _physics_process(delta):
 			var ang = (mp - global_position).angle()
 			if abs(angle_difference(rotation, ang)) > 0.1:
 				rotation = lerp_angle(rotation, ang, 10 * delta)
-			print("chasing")
 
 		State.searching:
 			speed = search_speed
 			loss_vision(last_seen_position, delta)
-			print("searching")
 
 		State.alert:
 			speed = normal_speed
@@ -69,7 +66,6 @@ func _physics_process(delta):
 			# 听到噪音间隔
 			if time_since_last_noise > 8.0:
 				initalize_Static()
-			print("alert")
 
 	# 检测玩家是否在视野范围内
 	player_visible = false

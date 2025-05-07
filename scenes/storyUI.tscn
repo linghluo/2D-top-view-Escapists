@@ -1,0 +1,73 @@
+[gd_scene load_steps=6 format=3 uid="uid://dflu8x1inytoa"]
+
+[ext_resource type="Script" uid="uid://buypy7uo0a8tg" path="res://script/story_ui.gd" id="1_lyj81"]
+[ext_resource type="Shader" uid="uid://csfsb17bg6rwk" path="res://shader/storyUI.gdshader" id="2_i02oe"]
+[ext_resource type="LabelSettings" uid="uid://c3iu62csxyqrl" path="res://src/Font/storyUI_max.tres" id="3_3hdqm"]
+[ext_resource type="LabelSettings" uid="uid://gvklnlusowvw" path="res://src/Font/storyUI_min.tres" id="4_ajk63"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3hdqm"]
+shader = ExtResource("2_i02oe")
+shader_parameter/fill_color = Color(0, 0, 0, 0.5)
+shader_parameter/border_color = Color(1, 0.84, 0, 1)
+shader_parameter/border_width = 0.1
+shader_parameter/glow_size = 0.1
+shader_parameter/screen_size = Vector2(400, 100)
+
+[node name="storyUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 161.0
+offset_top = 17.0
+offset_right = -151.0
+offset_bottom = -326.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lyj81")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_3hdqm")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 93.0
+offset_top = 161.0
+offset_right = -54.0
+offset_bottom = -39.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 62.0
+offset_top = 45.0
+offset_right = -48.0
+offset_bottom = -55.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "111111111111111"
+label_settings = ExtResource("3_3hdqm")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Label2" type="Label" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1148.0
+offset_top = 484.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "‘F’ or 'SPACE'"
+label_settings = ExtResource("4_ajk63")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
