@@ -1,4 +1,4 @@
 class_name Hurtbox
 extends Area2D
 
-signal hurt(Hitbox)
+signal hurt(hitbox)
