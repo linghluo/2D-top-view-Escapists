@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
-@export var normal_speed: float = 80.0 # 正常行走速度
-@export var sneak_speed: float = 40.0 # 潜行行走速度
+@export var normal_speed: float = 120.0 # 正常行走速度
+@export var sneak_speed: float = 60.0 # 潜行行走速度
 @export var dash_speed: float = 1000.0 # 冲刺速度（像素/秒）
 @export var dash_distance: float = 150.0 # 冲刺固定距离（像素）
 @export var dash_charge_time: float = 1.0 # 蓄力时长（秒）
@@ -44,7 +44,7 @@ func _on_timer_reset_alertness_timeout() -> void:
 	can_downalert = true
 
 func _physics_process(delta: float) -> void:
-	# print("alertness: ", alertness)
+	print("alertness: ", alertness)
 	# 清空速度（更好的速度管理）
 	velocity = Vector2.ZERO
 

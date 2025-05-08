@@ -10,6 +10,12 @@ var chase_threshold1: float = 40.0 # 警戒状态阈值
 var chase_threshold2: float = 70.0 # 追击状态阈值
 @export var alertness_upspeed: float = 15.0 # 警觉值增长速度
 
+@export var random_turn_enabled: bool = false # 是否启用随机转向
+@export var random_turn_interval: float = 10.0 # 随机转向间隔
+@export var random_turn_angle_range: float = 90.0 # 每次旋转最大角度（±）
+@export var random_turn_min_angle: float = 15.0 # 最小旋转角度
+var random_turn_timer: float = 0.0 # 随机转向计时器
+
 var speed: float = 0.0 # 初始化速度
 var initial_position: Vector2 # 声明初始位置变量，用来保存敌人初始位置
 var player: CharacterBody2D = null # 初始化玩家引用
@@ -22,6 +28,7 @@ var player_visible: bool = false # 初始化射线检测函数内tag标签（视
 var target_rotation: float = 0.0 # 初始化目标旋转角度
 var raycasts: Array = [] # 初始化射线数组
 var face_velocity: bool = false # 是否根据速度方向转头
+var restart_searching: bool = false # 重置搜寻状态
 
 # 状态机
 enum State {initalize, chasing, searching, alert}
@@ -32,8 +39,12 @@ var time_since_last_noise: float = 0.0 # 记录进入alert状态后没有收到�
 func _ready():
 	player = $"/root/Main/player"
 	raycasts = [$RayCast1, $RayCast2, $RayCast3, $RayCast4, $RayCast5, $RayCast6, $RayCast7, $RayCast8, $RayCast9]
+	for raycast in raycasts:
+		raycast.add_exception(self)
+		raycast.exclude_parent = true
 	add_to_group("enemies")
 	initial_position = global_position # 保存初始位置
+
 
 func _physics_process(delta):
 	# 实现转向
@@ -47,6 +58,18 @@ func _physics_process(delta):
 			speed = normal_speed
 			initalize_Static()
 
+			# 随机摆头
+			if random_turn_enabled:
+				random_turn_timer += delta
+				if random_turn_timer >= random_turn_interval:
+					random_turn_timer = 0.0
+					var random_sign = -1 if randf() < 0.5 else 1
+					var random_deg = random_turn_min_angle + randf() * (random_turn_angle_range - random_turn_min_angle)
+					var angle_offset = deg_to_rad(random_sign * random_deg)
+					target_rotation = rotation + angle_offset
+				rotation = lerp_angle(rotation, target_rotation, 1.5 * delta)
+
+
 		State.chasing:
 			speed = chase_speed
 			move_towards(last_seen_position)
@@ -57,7 +80,11 @@ func _physics_process(delta):
 
 		State.searching:
 			speed = search_speed
-			loss_vision(last_seen_position, delta)
+			if restart_searching:
+				tag_loss = 0
+				time_loss = 0.0
+				restart_searching = false
+			loss_vision(delta)
 
 		State.alert:
 			speed = normal_speed
@@ -119,8 +146,7 @@ func hear_noise(noise_position: Vector2, noise_strength: float):
 		if state in [State.alert, State.searching]:
 			last_seen_position = noise_position
 			state = State.searching
-			tag_loss = 0
-			time_loss = 0.0
+			restart_searching = true # 重置搜寻状态（防止跟凯子一样呆呆的）(怒了，还是呆呆的，不做了)
 			searching_in_progress = true
 			time_since_last_noise = 0.0 # 重置噪音计时器
 
@@ -151,12 +177,13 @@ func initalize_Static():
 # ==== 初始化状态 ====
 
 # 不再是跟丢啦！！函数了，苦哇苦，是搜寻函数
-func loss_vision(target_position: Vector2, delta: float):
+func loss_vision(delta: float):
 	match tag_loss:
 		0:
 			face_velocity = true
-			move_towards(target_position)
-			if global_position.distance_to(target_position) < 5.0:
+			move_towards(last_seen_position)
+
+			if global_position.distance_to(last_seen_position) < 5.0:
 				velocity = Vector2.ZERO
 				time_loss += delta
 				if time_loss > 1.0:

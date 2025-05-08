@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://script/Hurtbox.gd" id="3_4ra3w"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_md0e3"]
+radius = 2.0
 
 [sub_resource type="Gradient" id="Gradient_md0e3"]
 offsets = PackedFloat32Array(0, 0.00526315, 1)
@@ -12,12 +13,13 @@ colors = PackedColorArray(1, 1, 1, 1, 0.794737, 0.794737, 0.794737, 1, 0, 0, 0, 
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_4ra3w"]
 gradient = SubResource("Gradient_md0e3")
+metadata/_snap_count = 100
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_md0e3"]
-polygon = PackedVector2Array(115, -8, 109, -11, 139, -4)
+polygon = PackedVector2Array(115, -8, 109, -11, 144, -4)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_4ra3w"]
-polygon = PackedVector2Array(-14, 12, 15, 5, -17, 15)
+polygon = PackedVector2Array(-14, 12, 21, 4, -17, 15)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5uy6h"]
 radius = 23.0
@@ -28,49 +30,40 @@ wall_min_slide_angle = 0.0
 script = ExtResource("1_md0e3")
 
 [node name="RayCast1" type="RayCast2D" parent="."]
-position = Vector2(5, -3)
-target_position = Vector2(295, -82)
-collision_mask = 2
+position = Vector2(2, -2)
+target_position = Vector2(306, -83)
 
 [node name="RayCast2" type="RayCast2D" parent="."]
-position = Vector2(7, 0)
-target_position = Vector2(285, 85)
-collision_mask = 2
+position = Vector2(2, 0)
+target_position = Vector2(303, 81)
 
 [node name="RayCast3" type="RayCast2D" parent="."]
-position = Vector2(12, -2)
-target_position = Vector2(311, 3)
-collision_mask = 2
+position = Vector2(-1, -1)
+target_position = Vector2(315, 0)
 
 [node name="RayCast4" type="RayCast2D" parent="."]
 position = Vector2(1, -1)
-target_position = Vector2(313, -43)
-collision_mask = 2
+target_position = Vector2(312, -42)
 
 [node name="RayCast5" type="RayCast2D" parent="."]
 position = Vector2(0, -1)
-target_position = Vector2(312, 44)
-collision_mask = 2
+target_position = Vector2(313, 43)
 
 [node name="RayCast6" type="RayCast2D" parent="."]
 position = Vector2(1, -10)
-target_position = Vector2(308, -54)
-collision_mask = 2
+target_position = Vector2(309, -54)
 
 [node name="RayCast7" type="RayCast2D" parent="."]
 position = Vector2(2, 4)
-target_position = Vector2(319, 20)
-collision_mask = 2
+target_position = Vector2(312, 18)
 
 [node name="RayCast8" type="RayCast2D" parent="."]
-position = Vector2(3, -6)
-target_position = Vector2(313, -16)
-collision_mask = 2
+position = Vector2(2, -6)
+target_position = Vector2(312, -16)
 
 [node name="RayCast9" type="RayCast2D" parent="."]
 position = Vector2(1, 8)
-target_position = Vector2(300, 56)
-collision_mask = 2
+target_position = Vector2(310, 54)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-8.76562, -1)
@@ -82,17 +75,17 @@ metadata/_edit_lock_ = true
 position = Vector2(-10, -1)
 scale = Vector2(2, 2)
 shape = SubResource("CircleShape2D_md0e3")
-metadata/_edit_lock_ = true
 
 [node name="light" type="Node2D" parent="."]
 
 [node name="PointLight2D" type="PointLight2D" parent="light"]
-position = Vector2(-1, -2.49999)
-scale = Vector2(11.6875, 2.98438)
+position = Vector2(1.00001, -2.49999)
+scale = Vector2(10.1875, 2.98438)
 color = Color(1, 0, 0, 0.635294)
 energy = 4.27
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_4ra3w")
+metadata/_edit_lock_ = true
 
 [node name="LightOccluder2D1" type="LightOccluder2D" parent="light"]
 position = Vector2(-118, 9)

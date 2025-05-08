@@ -18,12 +18,12 @@ shader_parameter/glow_color = Color(1, 0.5, 1, 1)
 radius = 34.375
 height = 68.75
 
-[sub_resource type="Gradient" id="Gradient_4ra3w"]
+[sub_resource type="Gradient" id="Gradient_smehm"]
 offsets = PackedFloat32Array(0, 0.00526315, 1)
 colors = PackedColorArray(1, 1, 1, 1, 0.794737, 0.794737, 0.794737, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_g2els"]
-gradient = SubResource("Gradient_4ra3w")
+gradient = SubResource("Gradient_smehm")
 fill_to = Vector2(0.892593, 0)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_qhqgy"]
