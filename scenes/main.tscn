@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dukca71mfgm5q"]
+[gd_scene load_steps=8 format=3 uid="uid://dukca71mfgm5q"]
 
 [ext_resource type="PackedScene" uid="uid://nnf6c1hxa003" path="res://scenes/map.tscn" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://bq3vftd4hwv26" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://dj3pes45dip6o" path="res://scenes/enemy.tscn" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://dsdyiuw7p4gos" path="res://scenes/bonfire.tscn" id="2_tefeu"]
 [ext_resource type="Script" uid="uid://dehdi1dk1ymfs" path="res://script/camera001.gd" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://dflu8x1inytoa" path="res://scenes/storyUI.tscn" id="4_tefeu"]
 
@@ -26,11 +27,17 @@ metadata/_edit_lock_ = true
 metadata/_edit_lock_ = true
 
 [node name="GlobalLight2D" type="DirectionalLight2D" parent="."]
-visible = false
 color = Color(1, 1, 1, 0.733333)
 energy = 1.35
 blend_mode = 1
 metadata/_edit_lock_ = true
+
+[node name="Stories" type="Node" parent="."]
+
+[node name="Bonfires" type="Node" parent="."]
+
+[node name="bonfire" parent="Bonfires" instance=ExtResource("2_tefeu")]
+position = Vector2(3211, 506)
 
 [node name="player" parent="." instance=ExtResource("1_o5qli")]
 position = Vector2(3184, 309)

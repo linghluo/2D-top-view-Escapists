@@ -1,10 +1,6 @@
 extends Area2D
 
-@export var story_lines: Array[String] = [
-    "这里是第一段剧情。",
-    "这里是第二段剧情。",
-    "这是最后一段剧情。"
-]
+@export var story_lines: Array[String] = []
 
 @export var only_trigger_once := false
 

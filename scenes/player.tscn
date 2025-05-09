@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://3edcpkyy051q" path="res://src/shader_src/Water_effect.png" id="5_smehm"]
 [ext_resource type="Shader" uid="uid://beflbtfvtf0qo" path="res://shader/Cooling_dash.gdshader" id="6_ur7pv"]
 [ext_resource type="Texture2D" uid="uid://cd81ystqww1cn" path="res://src/shader_src/dash_icon.png" id="7_y4r1p"]
-[ext_resource type="Script" path="res://script/Hitbox.gd" id="8_smehm"]
+[ext_resource type="Script" uid="uid://d2dqhtfb4627q" path="res://script/Hitbox.gd" id="8_smehm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qhqgy"]
 shader = ExtResource("2_qhqgy")
