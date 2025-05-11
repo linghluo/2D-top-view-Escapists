@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bq3vftd4hwv26"]
+[gd_scene load_steps=19 format=3 uid="uid://bq3vftd4hwv26"]
 
 [ext_resource type="Script" uid="uid://bchgnsj8l8aqe" path="res://script/player.gd" id="1_g2brh"]
 [ext_resource type="Texture2D" uid="uid://bh0arcprifcq5" path="res://icon.svg" id="1_lj8jo"]
@@ -43,6 +43,9 @@ shader_parameter/tint_color = Color(1, 1, 1, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ur7pv"]
 size = Vector2(50, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_smehm"]
+size = Vector2(28, 25)
 
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("1_g2brh")
@@ -109,4 +112,11 @@ script = ExtResource("8_smehm")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("RectangleShape2D_ur7pv")
 
+[node name="Hurtbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(1, -0.5)
+shape = SubResource("RectangleShape2D_smehm")
+
 [connection signal="timeout" from="Timer_reset_alertness" to="." method="_on_timer_reset_alertness_timeout"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

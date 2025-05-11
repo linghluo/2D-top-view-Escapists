@@ -1,6 +1,5 @@
-[gd_scene load_steps=4 format=3 uid="uid://clvmo7xnuxar8"]
+[gd_scene load_steps=3 format=3 uid="uid://clvmo7xnuxar8"]
 
-[ext_resource type="Texture2D" uid="uid://bh0arcprifcq5" path="res://icon.svg" id="1_2hq12"]
 [ext_resource type="Script" uid="uid://bdx1ijlsyk272" path="res://script/story_trigger_1.gd" id="1_k54xm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k54xm"]
@@ -12,7 +11,6 @@ script = ExtResource("1_k54xm")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(1.90735e-06, 1.90735e-06)
 scale = Vector2(0.498047, 0.498047)
-texture = ExtResource("1_2hq12")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -0.5)

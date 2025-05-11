@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+# 信号
+signal player_respawned # 玩家重生信号（目前只有enemy接受）
+
 @export var normal_speed: float = 120.0 # 正常行走速度
 @export var sneak_speed: float = 60.0 # 潜行行走速度
 @export var dash_speed: float = 1000.0 # 冲刺速度（像素/秒）
@@ -27,24 +30,32 @@ var can_downalert: bool = true # 是否允许警觉值下降
 @export var time_can_downalert_speed: float = 20.0 # 重置可降警戒tag时间
 var alertness: float = 0.0 # 警觉值
 
+# 其他系统相关
+var checkpoint: Vector2 # 重生点
+var dash_timeer: float = 0.0 # 冲刺防卡墙用计时器
+
 # 玩家状态机
 enum State {normal, sneak, dash_change, dash}
 var state: State = State.normal # 初始化状态机
 
 func _ready() -> void:
+	add_to_group("player") # 加入玩家组
 	# 警觉值重置定时器
 	$Timer_reset_alertness.wait_time = time_can_downalert_speed
 	$Timer_reset_alertness.start()
+	# 初始化
+	checkpoint = global_position
 	# shader相关的初始化
 	charge_particles.emitting = false
 	water_effect.visible = false
 	dash_ready_icon.visible = false
 
+# 重置警觉值下降tag
 func _on_timer_reset_alertness_timeout() -> void:
 	can_downalert = true
 
 func _physics_process(delta: float) -> void:
-	print("alertness: ", alertness)
+	# print("alertness: ", alertness)
 	# 清空速度（更好的速度管理）
 	velocity = Vector2.ZERO
 
@@ -109,6 +120,12 @@ func _physics_process(delta: float) -> void:
 			if global_position.distance_to(dash_start_pos) >= dash_distance:
 				state = State.normal
 				velocity = Vector2.ZERO
+			# 防卡死
+			elif dash_timeer >= 0.5:
+				dash_timeer = 0.0
+				state = State.normal
+			else:
+				dash_timeer += delta
 			# 冲刺噪音
 			make_noise(global_position, 500.0)
 			# 残影
@@ -161,7 +178,19 @@ func make_noise(target_position: Vector2, noise_strength: float):
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.hear_noise(target_position, noise_strength)
 
-# ===== 以下是动画相关函数 =====
+# 玩家的死亡，与新生
+func die():
+	global_position = checkpoint
+	alertness = 0
+	velocity = Vector2.ZERO
+	emit_signal("player_respawned")
+
+# 被抓住了捏，会发生什么呢？
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("enemy_hitbox"):
+		die()
+
+# =============================================== 以下是动画相关函数 ===============================================
 
 # 残影相关
 func spawn_afterimage() -> void:

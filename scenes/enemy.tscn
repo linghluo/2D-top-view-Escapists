@@ -1,8 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://dj3pes45dip6o"]
+[gd_scene load_steps=11 format=3 uid="uid://dj3pes45dip6o"]
 
 [ext_resource type="Texture2D" uid="uid://bh0arcprifcq5" path="res://icon.svg" id="1_7p1mj"]
 [ext_resource type="Script" uid="uid://bqklqg1nx0k5w" path="res://script/enemy.gd" id="1_md0e3"]
-[ext_resource type="Script" uid="uid://b4nyos4p6of2k" path="res://script/Hurtbox.gd" id="3_4ra3w"]
+[ext_resource type="Script" path="res://script/Hurtbox.gd" id="3_4ra3w"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_md0e3"]
 radius = 2.0
@@ -20,6 +20,9 @@ polygon = PackedVector2Array(115, -8, 109, -11, 144, -4)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_4ra3w"]
 polygon = PackedVector2Array(-14, 12, 21, 4, -17, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ra3w"]
+size = Vector2(11, 40)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5uy6h"]
 radius = 23.0
@@ -103,6 +106,13 @@ avoidance_enabled = true
 debug_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(1, 0.00392157, 0, 1)
+
+[node name="Hitbox" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(-0.5, -1)
+shape = SubResource("RectangleShape2D_4ra3w")
 
 [node name="Hurtbox" type="Area2D" parent="."]
 visible = false

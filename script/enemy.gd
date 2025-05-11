@@ -37,12 +37,15 @@ var state = State.initalize # 初始化状态机
 var time_since_last_noise: float = 0.0 # 记录进入alert状态后没有收到噪音的时间
 
 func _ready():
-	player = $"/root/Main/player"
+	add_to_group("enemies") # 添加到敌人组
+	$Hitbox.add_to_group("enemy_hitbox") # 添加到攻击区域组
+	player = $"/root/Main/players/player"
+	# 信号
+	player.connect("player_respawned", Callable(self, "_on_player_respawned"))
 	raycasts = [$RayCast1, $RayCast2, $RayCast3, $RayCast4, $RayCast5, $RayCast6, $RayCast7, $RayCast8, $RayCast9]
 	for raycast in raycasts:
 		raycast.add_exception(self)
 		raycast.exclude_parent = true
-	add_to_group("enemies")
 	initial_position = global_position # 保存初始位置
 
 
@@ -246,3 +249,16 @@ func loss_vision(delta: float):
 
 func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2):
 	velocity = safe_velocity
+
+# 玩家死亡，敌人重置本身（重生！）
+func _on_player_respawned():
+	# 复位（以后增加需要复位的新变量要记得添加到下面）
+	global_position = initial_position
+	velocity = Vector2.ZERO
+	state = State.initalize
+	player_visible = false
+	searching_in_progress = false
+	restart_searching = false
+	tag_loss = 0
+	time_loss = 0.0
+	navigation_agent_2d.target_position = global_position
