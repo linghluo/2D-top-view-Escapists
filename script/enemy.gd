@@ -9,6 +9,9 @@ var max_alertness: float = 120.0 # 最大警觉度
 var chase_threshold1: float = 40.0 # 警戒状态阈值
 var chase_threshold2: float = 70.0 # 追击状态阈值
 @export var alertness_upspeed: float = 15.0 # 警觉值增长速度
+var rotation_speed1: float = 10.0 # 旋转速度
+var rotation_speed2: float = 1.0 # 旋转速度
+var rotation_speed3: float = 2.0 # 旋转速度
 
 @export var random_turn_enabled: bool = false # 是否启用随机转向
 @export var random_turn_interval: float = 10.0 # 随机转向间隔
@@ -18,6 +21,7 @@ var random_turn_timer: float = 0.0 # 随机转向计时器
 
 var speed: float = 0.0 # 初始化速度
 var initial_position: Vector2 # 声明初始位置变量，用来保存敌人初始位置
+var initial_rotation: float # 声明初始角度变量，用来保存敌人初始角度
 var player: CharacterBody2D = null # 初始化玩家引用
 var last_seen_position: Vector2 = Vector2.ZERO # 初始化上次看到玩家的位置
 var distance_to_player: float = 0.0 # 初始化玩家距离
@@ -31,7 +35,7 @@ var face_velocity: bool = false # 是否根据速度方向转头
 var restart_searching: bool = false # 重置搜寻状态
 
 # 状态机
-enum State {initalize, chasing, searching, alert}
+enum State {initalize, chasing, searching, alert, dead}
 var state = State.initalize # 初始化状态机
 
 var time_since_last_noise: float = 0.0 # 记录进入alert状态后没有收到噪音的时间
@@ -47,7 +51,7 @@ func _ready():
 		raycast.add_exception(self)
 		raycast.exclude_parent = true
 	initial_position = global_position # 保存初始位置
-
+	initial_rotation = rotation # 保存初始旋转角度
 
 func _physics_process(delta):
 	# 实现转向
@@ -97,6 +101,9 @@ func _physics_process(delta):
 			if time_since_last_noise > 8.0:
 				initalize_Static()
 
+		State.dead:
+			print("dead")
+
 	# 检测玩家是否在视野范围内
 	player_visible = false
 	for raycast in raycasts:
@@ -109,7 +116,7 @@ func _physics_process(delta):
 				searching_in_progress = false # 害tm的看！
 				alert_up(delta)
 
-				rotation = lerp_angle(rotation, (player.global_position - global_position).angle(), 10 * delta)
+				rotation = lerp_angle(rotation, (player.global_position - global_position).angle(), rotation_speed1 * delta)
 
 				break
 
@@ -186,7 +193,7 @@ func loss_vision(delta: float):
 			face_velocity = true
 			move_towards(last_seen_position)
 
-			if global_position.distance_to(last_seen_position) < 5.0:
+			if global_position.distance_to(last_seen_position) < 8.0:
 				velocity = Vector2.ZERO
 				time_loss += delta
 				if time_loss > 1.0:
@@ -198,7 +205,7 @@ func loss_vision(delta: float):
 			velocity = Vector2.ZERO
 			if time_loss == 0.0:
 				target_rotation = rotation + deg_to_rad(90)
-			rotation = lerp_angle(rotation, target_rotation, 1 * delta)
+			rotation = lerp_angle(rotation, target_rotation, rotation_speed2 * delta)
 			time_loss += delta
 			if time_loss > 5.0 and abs(angle_difference(rotation, target_rotation)) < 0.05:
 				tag_loss = 2
@@ -209,7 +216,7 @@ func loss_vision(delta: float):
 			velocity = Vector2.ZERO
 			if time_loss == 0.0:
 				target_rotation = rotation + deg_to_rad(180)
-			rotation = lerp_angle(rotation, target_rotation, 2 * delta)
+			rotation = lerp_angle(rotation, target_rotation, rotation_speed3 * delta)
 			time_loss += delta
 			if time_loss > 7.0 and abs(angle_difference(rotation, target_rotation)) < 0.05:
 				tag_loss = 3
@@ -220,7 +227,7 @@ func loss_vision(delta: float):
 			velocity = Vector2.ZERO
 			if time_loss == 0.0:
 				target_rotation = rotation + deg_to_rad(180)
-			rotation = lerp_angle(rotation, target_rotation, 2 * delta)
+			rotation = lerp_angle(rotation, target_rotation, rotation_speed3 * delta)
 			time_loss += delta
 			if time_loss > 7.0 and abs(angle_difference(rotation, target_rotation)) < 0.05:
 				tag_loss = 4
@@ -254,6 +261,10 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2):
 func _on_player_respawned():
 	# 复位（以后增加需要复位的新变量要记得添加到下面）
 	global_position = initial_position
+	rotation = initial_rotation
+	target_rotation = 0.0
+	face_velocity = false
+	last_seen_position = Vector2.ZERO
 	velocity = Vector2.ZERO
 	state = State.initalize
 	player_visible = false
@@ -262,3 +273,18 @@ func _on_player_respawned():
 	tag_loss = 0
 	time_loss = 0.0
 	navigation_agent_2d.target_position = global_position
+	navigation_agent_2d.set_velocity(Vector2.ZERO)
+
+	$Timer.start()
+	
+# 收到伤害，死亡
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	print("玩家受伤！")
+	if area.is_in_group("player_hitbox") and state != State.dead:
+		state = State.dead
+
+# 重置自身后延时触发用（二次重置敌人初始状态）
+func _on_timer_timeout() -> void:
+	global_position = initial_position
+	rotation = initial_rotation
+	target_rotation = 0.0

@@ -38,7 +38,7 @@ metadata/_edit_lock_ = true
 [node name="Stories" type="Node" parent="."]
 
 [node name="StoryTrigger_1" parent="Stories" instance=ExtResource("2_o6xl0")]
-position = Vector2(3196, 322)
+position = Vector2(3020, 322)
 story_lines = Array[String](["hxy是大猪鼻", "hxy小南娘", "要超"])
 
 [node name="Checkpoints" type="Node" parent="."]
@@ -49,7 +49,7 @@ position = Vector2(3085, 319)
 [node name="players" type="Node" parent="."]
 
 [node name="player" parent="players" instance=ExtResource("1_o5qli")]
-position = Vector2(3163, 254)
+position = Vector2(3165, 269)
 
 [node name="Enemies" type="Node" parent="."]
 
@@ -60,6 +60,10 @@ rotation = 0.733038
 [node name="Enemy2" parent="Enemies" instance=ExtResource("2_0wfyh")]
 position = Vector2(3545, 535)
 rotation = -0.92677
+
+[node name="Enemy3" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(3189, 381)
+rotation = 1.54462
 
 [node name="Bonfires" type="Node" parent="."]
 

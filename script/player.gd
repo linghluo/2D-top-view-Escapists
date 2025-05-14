@@ -40,6 +40,7 @@ var state: State = State.normal # 初始化状态机
 
 func _ready() -> void:
 	add_to_group("player") # 加入玩家组
+	$Hitbox.add_to_group("player_hitbox") # 添加到攻击区域组
 	# 警觉值重置定时器
 	$Timer_reset_alertness.wait_time = time_can_downalert_speed
 	$Timer_reset_alertness.start()

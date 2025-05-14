@@ -5,4 +5,3 @@ extends Area2D
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		body.checkpoint = global_position
-		print("Checkpoint set to: ", global_position)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bq3vftd4hwv26"]
+[gd_scene load_steps=18 format=3 uid="uid://bq3vftd4hwv26"]
 
 [ext_resource type="Script" uid="uid://bchgnsj8l8aqe" path="res://script/player.gd" id="1_g2brh"]
 [ext_resource type="Texture2D" uid="uid://bh0arcprifcq5" path="res://icon.svg" id="1_lj8jo"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://3edcpkyy051q" path="res://src/shader_src/Water_effect.png" id="5_smehm"]
 [ext_resource type="Shader" uid="uid://beflbtfvtf0qo" path="res://shader/Cooling_dash.gdshader" id="6_ur7pv"]
 [ext_resource type="Texture2D" uid="uid://cd81ystqww1cn" path="res://src/shader_src/dash_icon.png" id="7_y4r1p"]
-[ext_resource type="Script" uid="uid://d2dqhtfb4627q" path="res://script/Hitbox.gd" id="8_smehm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qhqgy"]
 shader = ExtResource("2_qhqgy")
@@ -41,11 +40,12 @@ shader = ExtResource("4_fjrip")
 shader_parameter/progress = 0.0
 shader_parameter/tint_color = Color(1, 1, 1, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ur7pv"]
-size = Vector2(50, 34)
+[sub_resource type="CircleShape2D" id="CircleShape2D_fjrip"]
+radius = 12.5
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_smehm"]
-size = Vector2(28, 25)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fjrip"]
+radius = 12.0
+height = 32.0
 
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("1_g2brh")
@@ -103,20 +103,19 @@ texture = ExtResource("7_y4r1p")
 material = SubResource("ShaderMaterial_d2wvv")
 texture = ExtResource("5_smehm")
 
-[node name="Hitbox" type="Area2D" parent="."]
-visible = false
-collision_layer = 0
-collision_mask = 32
-script = ExtResource("8_smehm")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-shape = SubResource("RectangleShape2D_ur7pv")
-
 [node name="Hurtbox" type="Area2D" parent="."]
+position = Vector2(31, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2(1, -0.5)
-shape = SubResource("RectangleShape2D_smehm")
+position = Vector2(-31, 0)
+shape = SubResource("CircleShape2D_fjrip")
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(10, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_fjrip")
 
 [connection signal="timeout" from="Timer_reset_alertness" to="." method="_on_timer_reset_alertness_timeout"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
