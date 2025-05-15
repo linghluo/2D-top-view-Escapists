@@ -177,11 +177,15 @@ func move_towards(target_position: Vector2):
 func initalize_Static():
 	# 妈妈妈妈，这里有花！
 	var distance_to_home = global_position.distance_to(initial_position)
+	var tag: int
 	if distance_to_home > 5.0: # 给我回家！！！
 		move_towards(initial_position) # 呜呜呜~~~
+		tag = 0
 	else:
 		velocity = Vector2.ZERO
-
+		if tag == 0:
+			_on_player_respawned()
+			tag = 1
 # 二----动态巡逻敌人
 
 # ==== 初始化状态 ====
@@ -261,7 +265,8 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2):
 func _on_player_respawned():
 	# 复位（以后增加需要复位的新变量要记得添加到下面）
 	global_position = initial_position
-	rotation = initial_rotation
+	target_rotation = rotation + deg_to_rad(180)
+	rotation = lerp_angle(rotation, initial_rotation, 0.05)
 	target_rotation = 0.0
 	face_velocity = false
 	last_seen_position = Vector2.ZERO
@@ -279,7 +284,6 @@ func _on_player_respawned():
 	
 # 收到伤害，死亡
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	print("玩家受伤！")
 	if area.is_in_group("player_hitbox") and state != State.dead:
 		state = State.dead
 

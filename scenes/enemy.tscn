@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bqklqg1nx0k5w" path="res://script/enemy.gd" id="1_md0e3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_md0e3"]
-radius = 1.11803
+radius = 0.5
 
 [sub_resource type="Gradient" id="Gradient_md0e3"]
 offsets = PackedFloat32Array(0, 0.00526315, 1)
@@ -75,8 +75,7 @@ texture = ExtResource("1_7p1mj")
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-9, 0)
-scale = Vector2(2, 2)
+scale = Vector2(1e-05, 1e-05)
 shape = SubResource("CircleShape2D_md0e3")
 
 [node name="Timer" type="Timer" parent="."]
