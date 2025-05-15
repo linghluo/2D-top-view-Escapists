@@ -77,3 +77,7 @@ row_next={
 [rendering]
 
 viewport/hdr_2d=true
+
+[xr]
+
+shaders/enabled=true

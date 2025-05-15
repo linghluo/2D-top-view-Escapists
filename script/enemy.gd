@@ -37,6 +37,7 @@ var restart_searching: bool = false # 重置搜寻状态
 # 状态机
 enum State {initalize, chasing, searching, alert, dead}
 var state = State.initalize # 初始化状态机
+var is_dead # 判断自身是否死亡
 
 var time_since_last_noise: float = 0.0 # 记录进入alert状态后没有收到噪音的时间
 
@@ -102,7 +103,7 @@ func _physics_process(delta):
 				initalize_Static()
 
 		State.dead:
-			print("dead")
+			die()
 
 	# 检测玩家是否在视野范围内
 	player_visible = false
@@ -264,8 +265,9 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2):
 # 玩家死亡，敌人重置本身（重生！）
 func _on_player_respawned():
 	# 复位（以后增加需要复位的新变量要记得添加到下面）
+	set_physics_process(true)
+	$light/PointLight2D.color = Color(255, 0, 0, 162)
 	global_position = initial_position
-	target_rotation = rotation + deg_to_rad(180)
 	rotation = lerp_angle(rotation, initial_rotation, 0.05)
 	target_rotation = 0.0
 	face_velocity = false
@@ -280,6 +282,16 @@ func _on_player_respawned():
 	navigation_agent_2d.target_position = global_position
 	navigation_agent_2d.set_velocity(Vector2.ZERO)
 
+	is_dead = false
+	$CollisionShape2D.disabled = false
+
+	$DeathParticles.visible = false
+	$DeathParticles.emitting = false
+	$Hitbox.monitoring = true
+	$Hitbox.monitorable = true
+	$Hurtbox.monitoring = true
+	$Hurtbox.monitorable = true
+
 	$Timer.start()
 	
 # 收到伤害，死亡
@@ -292,3 +304,24 @@ func _on_timer_timeout() -> void:
 	global_position = initial_position
 	rotation = initial_rotation
 	target_rotation = 0.0
+
+# 死了啦，你害的
+func die():
+	if is_dead:
+		return
+	is_dead = true
+
+	# 播放死亡粒子效果动画
+	$DeathParticles.visible = true
+	$DeathParticles.restart()
+	$DeathParticles.emitting = true
+	print($DeathParticles)
+
+	# 消失
+	$light/PointLight2D.color = Color(157, 137, 0, 162)
+	$CollisionShape2D.disabled = true
+	$Hitbox.monitoring = false
+	$Hitbox.monitorable = false
+	$Hurtbox.monitoring = false
+	$Hurtbox.monitorable = false
+	set_physics_process(false)

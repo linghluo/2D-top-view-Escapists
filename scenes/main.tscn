@@ -29,7 +29,6 @@ metadata/_edit_lock_ = true
 metadata/_edit_lock_ = true
 
 [node name="GlobalLight2D" type="DirectionalLight2D" parent="."]
-visible = false
 color = Color(1, 1, 1, 0.733333)
 energy = 1.35
 blend_mode = 1
@@ -46,11 +45,6 @@ story_lines = Array[String](["hxy是大猪鼻", "hxy小南娘", "要超"])
 [node name="checkpoint" parent="Checkpoints" instance=ExtResource("3_tipki")]
 position = Vector2(3085, 319)
 
-[node name="players" type="Node" parent="."]
-
-[node name="player" parent="players" instance=ExtResource("1_o5qli")]
-position = Vector2(3165, 269)
-
 [node name="Enemies" type="Node" parent="."]
 
 [node name="Enemy" parent="Enemies" instance=ExtResource("2_0wfyh")]
@@ -64,6 +58,11 @@ rotation = -0.92677
 [node name="Enemy3" parent="Enemies" instance=ExtResource("2_0wfyh")]
 position = Vector2(3189, 381)
 rotation = 1.54462
+
+[node name="players" type="Node" parent="."]
+
+[node name="player" parent="players" instance=ExtResource("1_o5qli")]
+position = Vector2(3172, 282)
 
 [node name="Bonfires" type="Node" parent="."]
 
