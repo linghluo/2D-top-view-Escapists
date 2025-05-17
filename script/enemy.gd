@@ -264,9 +264,9 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2):
 
 # 玩家死亡，敌人重置本身（重生！）
 func _on_player_respawned():
-	# 复位（以后增加需要复位的新变量要记得添加到下面）
-	set_physics_process(true)
-	$light/PointLight2D.color = Color(255, 0, 0, 162)
+	# 复位
+	call_deferred("set_physics_process", true)
+	$light/PointLight2D.color = Color(1, 0, 0, 0.65)
 	global_position = initial_position
 	rotation = lerp_angle(rotation, initial_rotation, 0.05)
 	target_rotation = 0.0
@@ -283,17 +283,17 @@ func _on_player_respawned():
 	navigation_agent_2d.set_velocity(Vector2.ZERO)
 
 	is_dead = false
-	$CollisionShape2D.disabled = false
-
-	$DeathParticles.visible = false
+	$CollisionShape2D.set_deferred("disabled", false)
 	$DeathParticles.emitting = false
-	$Hitbox.monitoring = true
-	$Hitbox.monitorable = true
-	$Hurtbox.monitoring = true
-	$Hurtbox.monitorable = true
+
+	$Hitbox.set_deferred("monitoring", true)
+	$Hitbox.set_deferred("monitorable", true)
+	$Hurtbox.set_deferred("monitoring", true)
+	$Hurtbox.set_deferred("monitorable", true)
 
 	$Timer.start()
-	
+
+
 # 收到伤害，死亡
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("player_hitbox") and state != State.dead:
@@ -312,16 +312,15 @@ func die():
 	is_dead = true
 
 	# 播放死亡粒子效果动画
-	$DeathParticles.visible = true
 	$DeathParticles.restart()
 	$DeathParticles.emitting = true
 	print($DeathParticles)
 
 	# 消失
-	$light/PointLight2D.color = Color(157, 137, 0, 162)
-	$CollisionShape2D.disabled = true
-	$Hitbox.monitoring = false
-	$Hitbox.monitorable = false
-	$Hurtbox.monitoring = false
-	$Hurtbox.monitorable = false
-	set_physics_process(false)
+	$light/PointLight2D.color = Color(0.6157, 0.5373, 0.0, 0.6509)
+	$CollisionShape2D.set_deferred("disabled", true)
+	$Hitbox.set_deferred("monitoring", false)
+	$Hitbox.set_deferred("monitorable", false)
+	$Hurtbox.set_deferred("monitoring", false)
+	$Hurtbox.set_deferred("monitorable", false)
+	call_deferred("set_physics_process", false)

@@ -10,9 +10,10 @@ signal player_respawned # 玩家重生信号（目前只有enemy接受）
 @export var dash_charge_time: float = 1.0 # 蓄力时长（秒）
 @export var dash_cooldown: float = 9.0 # 冲刺冷却（秒）
 @export var ghost_interval: float = 0.02 # 残影生成间隔（秒）
-@onready var charge_particles: CPUParticles2D = $CPUParticles_dash # 蓄力粒子效果
 @onready var water_effect: Sprite2D = $Water_dash # 水波纹效果图
 @onready var dash_ready_icon: Sprite2D = $Cooling_dash # 冲刺准备完成图标
+@onready var attack_effect: Sprite2D = $Attack # 攻击效果
+@onready var attack_timer := $AttackTimer # 攻击计时器
 
 # 冲刺系统相关
 var dash_charge_timer: float = 0.0 # 蓄力倒计时
@@ -33,6 +34,7 @@ var alertness: float = 0.0 # 警觉值
 # 其他系统相关
 var checkpoint: Vector2 # 重生点
 var dash_timeer: float = 0.0 # 冲刺防卡墙用计时器
+var is_attacking = false # 攻击tag
 
 # 玩家状态机
 enum State {normal, sneak, dash_change, dash}
@@ -47,7 +49,6 @@ func _ready() -> void:
 	# 初始化
 	checkpoint = global_position
 	# shader相关的初始化
-	charge_particles.emitting = false
 	water_effect.visible = false
 	dash_ready_icon.visible = false
 
@@ -73,7 +74,6 @@ func _physics_process(delta: float) -> void:
 			elif Input.is_action_just_pressed("p_dash") and dash_timer <= 0.0:
 				state = State.dash_change
 				dash_charge_timer = dash_charge_time
-				charge_particles.emitting = true
 				water_effect.visible = false
 
 		State.sneak:
@@ -94,7 +94,6 @@ func _physics_process(delta: float) -> void:
 				dash_water_effect()
 
 			if Input.is_action_just_released("p_dash"):
-				charge_particles.emitting = false
 				water_effect.visible = false
 				# 停止波纹
 				has_started_water = false
@@ -142,6 +141,15 @@ func _physics_process(delta: float) -> void:
 	elif not dash_ready_icon.visible:
 		dash_ready_icon_effect()
 
+	# 攻击！
+	if Input.is_action_just_pressed("p_attack"):
+		if not is_attacking:
+			is_attacking = true
+			attack_timer.start()
+			$Hitbox.set_deferred("monitoring", true)
+			$Hitbox.set_deferred("monitorable", true)
+			play_attack_effect()
+	
 	# 朝向鼠标
 	face_mouse(delta)
 
@@ -183,6 +191,9 @@ func make_noise(target_position: Vector2, noise_strength: float):
 func die():
 	global_position = checkpoint
 	alertness = 0
+	dash_timer = 0.0
+	can_downalert = true
+	state = State.normal
 	velocity = Vector2.ZERO
 	emit_signal("player_respawned")
 
@@ -192,6 +203,20 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		die()
 
 # =============================================== 以下是动画相关函数 ===============================================
+# 攻击！
+func play_attack_effect():
+	attack_effect.visible = true
+	var mat = attack_effect.material
+	if mat == null:
+		return
+	mat.set_shader_parameter("progress", 0.0)
+
+	var tween = create_tween()
+	tween.tween_property(mat, "shader_parameter/progress", 1.0, 0.3)
+	tween.tween_callback(Callable(self, "_on_attack_effect_finished"))
+
+func _on_attack_effect_finished():
+	attack_effect.visible = false
 
 # 残影相关
 func spawn_afterimage() -> void:
@@ -251,3 +276,9 @@ func dash_ready_icon_effect():
 	)
 
 	t.tween_callback(Callable(dash_ready_icon, "hide"))
+
+
+func _on_attack_timer_timeout() -> void:
+	is_attacking = false
+	$Hitbox.set_deferred("monitoring", false)
+	$Hitbox.set_deferred("monitorable", false)

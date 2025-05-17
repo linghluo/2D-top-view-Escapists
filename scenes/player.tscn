@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bq3vftd4hwv26"]
+[gd_scene load_steps=21 format=3 uid="uid://bq3vftd4hwv26"]
 
 [ext_resource type="Script" uid="uid://bchgnsj8l8aqe" path="res://script/player.gd" id="1_g2brh"]
 [ext_resource type="Texture2D" uid="uid://bh0arcprifcq5" path="res://icon.svg" id="1_lj8jo"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://3edcpkyy051q" path="res://src/shader_src/Water_effect.png" id="5_smehm"]
 [ext_resource type="Shader" uid="uid://beflbtfvtf0qo" path="res://shader/Cooling_dash.gdshader" id="6_ur7pv"]
 [ext_resource type="Texture2D" uid="uid://cd81ystqww1cn" path="res://src/shader_src/dash_icon.png" id="7_y4r1p"]
+[ext_resource type="Shader" uid="uid://bo1umc5ioc5kb" path="res://shader/player_attack.gdshader" id="8_smehm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qhqgy"]
 shader = ExtResource("2_qhqgy")
@@ -40,6 +41,15 @@ shader = ExtResource("4_fjrip")
 shader_parameter/progress = 0.0
 shader_parameter/tint_color = Color(1, 1, 1, 1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ur7pv"]
+shader = ExtResource("8_smehm")
+shader_parameter/progress = 0.0
+shader_parameter/slash_color = Vector4(1, 0.2, 0.2, 0.8)
+shader_parameter/arc_angle = 3.14159
+shader_parameter/softness = 0.2
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_smehm"]
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_fjrip"]
 radius = 12.5
 
@@ -70,6 +80,9 @@ metadata/_edit_lock_ = true
 
 [node name="Timer_reset_alertness" type="Timer" parent="."]
 
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 0.3
+
 [node name="light" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
 
@@ -92,9 +105,6 @@ position = Vector2(8, -15)
 occluder = SubResource("OccluderPolygon2D_dqkch")
 metadata/_edit_lock_ = true
 
-[node name="CPUParticles_dash" type="CPUParticles2D" parent="."]
-metadata/_edit_lock_ = true
-
 [node name="Cooling_dash" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_3v2ag")
 texture = ExtResource("7_y4r1p")
@@ -102,6 +112,13 @@ texture = ExtResource("7_y4r1p")
 [node name="Water_dash" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_d2wvv")
 texture = ExtResource("5_smehm")
+
+[node name="Attack" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_ur7pv")
+position = Vector2(14.8536, 0.499999)
+scale = Vector2(32.2929, 31)
+texture = SubResource("CanvasTexture_smehm")
 
 [node name="Hurtbox" type="Area2D" parent="."]
 position = Vector2(31, 0)
@@ -111,6 +128,8 @@ position = Vector2(-31, 0)
 shape = SubResource("CircleShape2D_fjrip")
 
 [node name="Hitbox" type="Area2D" parent="."]
+monitoring = false
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(10, 0)
@@ -118,4 +137,5 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_fjrip")
 
 [connection signal="timeout" from="Timer_reset_alertness" to="." method="_on_timer_reset_alertness_timeout"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
