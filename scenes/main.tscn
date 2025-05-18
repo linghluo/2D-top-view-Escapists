@@ -1,14 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://dukca71mfgm5q"]
+[gd_scene load_steps=14 format=3 uid="uid://dukca71mfgm5q"]
 
 [ext_resource type="Script" uid="uid://bmd0wu4mh3n8u" path="res://script/main.gd" id="1_choun"]
 [ext_resource type="PackedScene" uid="uid://nnf6c1hxa003" path="res://scenes/map.tscn" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://bq3vftd4hwv26" path="res://scenes/player.tscn" id="1_o5qli"]
-[ext_resource type="PackedScene" uid="uid://dj3pes45dip6o" path="res://scenes/enemy.tscn" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://dj3pes45dip6o" path="res://scenes/storys/enemy.tscn" id="2_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://clvmo7xnuxar8" path="res://scenes/storys/story_trigger_1.tscn" id="2_o6xl0"]
-[ext_resource type="PackedScene" uid="uid://dsdyiuw7p4gos" path="res://scenes/bonfire.tscn" id="2_tefeu"]
-[ext_resource type="PackedScene" uid="uid://duysfl7twbggy" path="res://scenes/checkpoint.tscn" id="3_tipki"]
+[ext_resource type="PackedScene" uid="uid://dsdyiuw7p4gos" path="res://scenes/storys/bonfire.tscn" id="2_tefeu"]
+[ext_resource type="PackedScene" uid="uid://duysfl7twbggy" path="res://scenes/storys/checkpoint.tscn" id="3_tipki"]
 [ext_resource type="Script" uid="uid://dehdi1dk1ymfs" path="res://script/camera001.gd" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://dflu8x1inytoa" path="res://scenes/storyUI.tscn" id="4_tefeu"]
+[ext_resource type="PackedScene" uid="uid://dsec6tnqu5fnr" path="res://scenes/storys/camera_area.tscn" id="8_ya4ey"]
 [ext_resource type="Shader" uid="uid://c1da1hevyq553" path="res://shader/main.gdshader" id="9_ya4ey"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eb6dy"]
@@ -40,6 +41,12 @@ script = ExtResource("1_choun")
 
 [node name="Map" parent="." instance=ExtResource("1_jyhfs")]
 position = Vector2(-2, 256)
+metadata/_edit_lock_ = true
+
+[node name="GlobalLight2D" type="DirectionalLight2D" parent="."]
+color = Color(1, 1, 1, 0.415686)
+energy = 2.31
+blend_mode = 1
 metadata/_edit_lock_ = true
 
 [node name="SubContainer" type="SubViewportContainer" parent="."]
@@ -76,29 +83,43 @@ rotation = 1.54462
 [node name="players" type="Node" parent="."]
 
 [node name="player" parent="players" instance=ExtResource("1_o5qli")]
-position = Vector2(3161, 571)
+position = Vector2(44, 577)
 
 [node name="Bonfires" type="Node" parent="."]
 
 [node name="bonfire" parent="Bonfires" instance=ExtResource("2_tefeu")]
 position = Vector2(3121, 846)
 
-[node name="GlobalLight2D" type="DirectionalLight2D" parent="."]
-color = Color(1, 1, 1, 0.415686)
-energy = 2.31
-blend_mode = 1
-metadata/_edit_lock_ = true
-
 [node name="Stories" type="Node" parent="."]
 
 [node name="StoryTrigger_1" parent="Stories" instance=ExtResource("2_o6xl0")]
-position = Vector2(3002, 577)
+position = Vector2(259, 588)
 story_lines = Array[String](["hxy是大猪鼻", "hxy小南娘", "要超"])
 
 [node name="Checkpoints" type="Node" parent="."]
 
 [node name="checkpoint" parent="Checkpoints" instance=ExtResource("3_tipki")]
 position = Vector2(3087, 575)
+
+[node name="Camera" type="Node" parent="."]
+
+[node name="CameraArea" parent="Camera" instance=ExtResource("8_ya4ey")]
+position = Vector2(675.025, 576.805)
+scale = Vector2(7.065, 3.235)
+zoom = Vector2(4, 4)
+
+[node name="CameraArea2" parent="Camera" instance=ExtResource("8_ya4ey")]
+position = Vector2(1916.67, 575.315)
+scale = Vector2(5.87, 10.605)
+
+[node name="CameraArea3" parent="Camera" instance=ExtResource("8_ya4ey")]
+position = Vector2(2801, 573)
+scale = Vector2(3.325, 2.87)
+zoom = Vector2(4, 4)
+
+[node name="CameraArea4" parent="Camera" instance=ExtResource("8_ya4ey")]
+position = Vector2(3534.2, 574)
+scale = Vector2(4.38, 5.195)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -111,6 +132,7 @@ material = SubResource("ShaderMaterial_eb6dy")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(409, 107)
 script = ExtResource("4_jyhfs")
+player_path = NodePath("../players/player")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_jyhfs")
