@@ -113,6 +113,9 @@ texture = ExtResource("7_y4r1p")
 material = SubResource("ShaderMaterial_d2wvv")
 texture = ExtResource("5_smehm")
 
+[node name="Water_noise" type="Sprite2D" parent="."]
+texture = ExtResource("5_smehm")
+
 [node name="Attack" type="Sprite2D" parent="."]
 visible = false
 material = SubResource("ShaderMaterial_ur7pv")
@@ -132,7 +135,7 @@ monitoring = false
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(10, 0)
+position = Vector2(12, 0)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_fjrip")
 

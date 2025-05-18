@@ -14,6 +14,7 @@ signal player_respawned # 玩家重生信号（目前只有enemy接受）
 @onready var dash_ready_icon: Sprite2D = $Cooling_dash # 冲刺准备完成图标
 @onready var attack_effect: Sprite2D = $Attack # 攻击效果
 @onready var attack_timer := $AttackTimer # 攻击计时器
+@onready var water_noise_sprite := $Water_noise
 
 # 冲刺系统相关
 var dash_charge_timer: float = 0.0 # 蓄力倒计时
@@ -35,6 +36,8 @@ var alertness: float = 0.0 # 警觉值
 var checkpoint: Vector2 # 重生点
 var dash_timeer: float = 0.0 # 冲刺防卡墙用计时器
 var is_attacking = false # 攻击tag
+var noise_animation_cooldown_timer: float = 0.0
+const NOISE_ANIMATION_COOLDOWN: float = 1.0 # 噪音动画时间限制（/秒）
 
 # 玩家状态机
 enum State {normal, sneak, dash_change, dash}
@@ -68,7 +71,7 @@ func _physics_process(delta: float) -> void:
 			velocity = dir * normal_speed
 			# 正常行走噪音
 			if dir != Vector2.ZERO:
-				make_noise(global_position, 100.0)
+				make_noise(global_position, 8.0, 200.0)
 			if Input.is_action_pressed("p_sneak"):
 				state = State.sneak
 			elif Input.is_action_just_pressed("p_dash") and dash_timer <= 0.0:
@@ -127,7 +130,7 @@ func _physics_process(delta: float) -> void:
 			else:
 				dash_timeer += delta
 			# 冲刺噪音
-			make_noise(global_position, 500.0)
+			make_noise(global_position, 20.0, 400.0)
 			# 残影
 			ghost_timer -= delta
 			if ghost_timer <= 0.0:
@@ -140,6 +143,9 @@ func _physics_process(delta: float) -> void:
 	# 冷却完成的炫酷动画
 	elif not dash_ready_icon.visible:
 		dash_ready_icon_effect()
+	# 噪音动画冷却
+	if noise_animation_cooldown_timer > 0.0:
+		noise_animation_cooldown_timer -= delta
 
 	# 攻击！
 	if Input.is_action_just_pressed("p_attack"):
@@ -183,9 +189,13 @@ func alert_down(delta: float) -> void:
 	alertness = max(alertness, 0.0)
 
 # 玩家发出噪音
-func make_noise(target_position: Vector2, noise_strength: float):
+func make_noise(target_position: Vector2, noise_strength: float, noise_radius: float):
+	if noise_animation_cooldown_timer <= 0.0:
+		play_noise(noise_radius)
+		noise_animation_cooldown_timer = NOISE_ANIMATION_COOLDOWN
+
 	for enemy in get_tree().get_nodes_in_group("enemies"):
-		enemy.hear_noise(target_position, noise_strength)
+		enemy.hear_noise(target_position, noise_strength, noise_radius)
 
 # 玩家的死亡，与新生
 func die():
@@ -201,6 +211,11 @@ func die():
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemy_hitbox"):
 		die()
+	
+func _on_attack_timer_timeout() -> void:
+	is_attacking = false
+	$Hitbox.set_deferred("monitoring", false)
+	$Hitbox.set_deferred("monitorable", false)
 
 # =============================================== 以下是动画相关函数 ===============================================
 # 攻击！
@@ -217,6 +232,7 @@ func play_attack_effect():
 
 func _on_attack_effect_finished():
 	attack_effect.visible = false
+
 
 # 残影相关
 func spawn_afterimage() -> void:
@@ -277,8 +293,14 @@ func dash_ready_icon_effect():
 
 	t.tween_callback(Callable(dash_ready_icon, "hide"))
 
+func play_noise(radius: float):
+	water_noise_sprite.scale = Vector2.ZERO
+	water_noise_sprite.modulate.a = 1.0
+	water_noise_sprite.show()
 
-func _on_attack_timer_timeout() -> void:
-	is_attacking = false
-	$Hitbox.set_deferred("monitoring", false)
-	$Hitbox.set_deferred("monitorable", false)
+	var target_scale = radius / water_noise_sprite.texture.get_width() * 2.0
+
+	var tween = create_tween()
+	tween.tween_property(water_noise_sprite, "scale", Vector2.ONE * target_scale, 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(water_noise_sprite, "modulate:a", 0.0, 0.6)
+	tween.tween_callback(Callable(water_noise_sprite, "hide"))

@@ -148,10 +148,10 @@ func alert_up(delta: float):
 		player.alertness = max_alertness
 
 # 接受噪音方法
-func hear_noise(noise_position: Vector2, noise_strength: float):
+func hear_noise(noise_position: Vector2, noise_strength: float, noise_radius: float):
 	var distance = global_position.distance_to(noise_position)
-	if distance < noise_strength * 3.0:
-		player.alertness += 0.001 * noise_strength
+	if distance < noise_radius:
+		player.alertness += 0.017 * noise_strength
 		if player.alertness > max_alertness:
 			player.alertness = max_alertness
 		if state in [State.alert, State.searching]:

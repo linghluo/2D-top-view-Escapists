@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://dukca71mfgm5q"]
+[gd_scene load_steps=13 format=3 uid="uid://dukca71mfgm5q"]
 
+[ext_resource type="Script" uid="uid://bmd0wu4mh3n8u" path="res://script/main.gd" id="1_choun"]
 [ext_resource type="PackedScene" uid="uid://nnf6c1hxa003" path="res://scenes/map.tscn" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://bq3vftd4hwv26" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://dj3pes45dip6o" path="res://scenes/enemy.tscn" id="2_0wfyh"]
@@ -8,6 +9,16 @@
 [ext_resource type="PackedScene" uid="uid://duysfl7twbggy" path="res://scenes/checkpoint.tscn" id="3_tipki"]
 [ext_resource type="Script" uid="uid://dehdi1dk1ymfs" path="res://script/camera001.gd" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://dflu8x1inytoa" path="res://scenes/storyUI.tscn" id="4_tefeu"]
+[ext_resource type="Shader" uid="uid://c1da1hevyq553" path="res://shader/main.gdshader" id="9_ya4ey"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eb6dy"]
+shader = ExtResource("9_ya4ey")
+shader_parameter/edge_threshold = 0.1
+shader_parameter/base_edge_color = Color(0, 0, 0, 1)
+shader_parameter/edge_thickness = 1.5
+shader_parameter/jitter_strength = 1.5
+shader_parameter/noise_speed = 1.5
+shader_parameter/pixel_noise_amount = 0.03
 
 [sub_resource type="Environment" id="Environment_jyhfs"]
 background_mode = 3
@@ -25,56 +36,77 @@ glow_blend_mode = 0
 glow_hdr_threshold = 0.9
 
 [node name="Main" type="Node2D"]
-metadata/_edit_lock_ = true
+script = ExtResource("1_choun")
 
 [node name="Map" parent="." instance=ExtResource("1_jyhfs")]
+position = Vector2(-2, 256)
 metadata/_edit_lock_ = true
+
+[node name="SubContainer" type="SubViewportContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_lock_ = true
+
+[node name="Sub" type="SubViewport" parent="SubContainer"]
+disable_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(11609, 7400)
+render_target_update_mode = 4
+
+[node name="Map" parent="SubContainer/Sub" instance=ExtResource("1_jyhfs")]
+visible = false
+position = Vector2(-2, 256)
+metadata/_edit_lock_ = true
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="Enemy" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(3170, 319)
+rotation = 0.733038
+
+[node name="Enemy2" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(3527, 799)
+rotation = -0.92677
+
+[node name="Enemy3" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(3200, 658)
+rotation = 1.54462
+
+[node name="players" type="Node" parent="."]
+
+[node name="player" parent="players" instance=ExtResource("1_o5qli")]
+position = Vector2(3161, 571)
+
+[node name="Bonfires" type="Node" parent="."]
+
+[node name="bonfire" parent="Bonfires" instance=ExtResource("2_tefeu")]
+position = Vector2(3121, 846)
 
 [node name="GlobalLight2D" type="DirectionalLight2D" parent="."]
 color = Color(1, 1, 1, 0.415686)
-energy = 2.41
+energy = 2.31
 blend_mode = 1
 metadata/_edit_lock_ = true
 
 [node name="Stories" type="Node" parent="."]
 
 [node name="StoryTrigger_1" parent="Stories" instance=ExtResource("2_o6xl0")]
-position = Vector2(3020, 322)
+position = Vector2(3002, 577)
 story_lines = Array[String](["hxy是大猪鼻", "hxy小南娘", "要超"])
 
 [node name="Checkpoints" type="Node" parent="."]
 
 [node name="checkpoint" parent="Checkpoints" instance=ExtResource("3_tipki")]
-position = Vector2(3085, 319)
-
-[node name="Enemies" type="Node" parent="."]
-
-[node name="Enemy" parent="Enemies" instance=ExtResource("2_0wfyh")]
-position = Vector2(3171, 64.0001)
-rotation = 0.733038
-
-[node name="Enemy2" parent="Enemies" instance=ExtResource("2_0wfyh")]
-position = Vector2(3545, 535)
-rotation = -0.92677
-
-[node name="Enemy3" parent="Enemies" instance=ExtResource("2_0wfyh")]
-position = Vector2(3189, 381)
-rotation = 1.54462
-
-[node name="players" type="Node" parent="."]
-
-[node name="player" parent="players" instance=ExtResource("1_o5qli")]
-position = Vector2(3172, 282)
-
-[node name="Bonfires" type="Node" parent="."]
-
-[node name="bonfire" parent="Bonfires" instance=ExtResource("2_tefeu")]
-position = Vector2(3137, 574)
+position = Vector2(3087, 575)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="storyUI" parent="CanvasLayer" instance=ExtResource("4_tefeu")]
 metadata/_edit_lock_ = true
+
+[node name="Sprite_main" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_eb6dy")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(409, 107)
