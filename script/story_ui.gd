@@ -14,11 +14,14 @@ var printing_speed := 0.06 # 打字速度
 
 func _ready():
 	visible = false
+
 	if not has_node("TypingTimer"):
 		var typing_timer = Timer.new()
 		typing_timer.name = "TypingTimer"
 		typing_timer.one_shot = true
 		add_child(typing_timer)
+
+	$TypingTimer.timeout.connect(Callable(self, "type_next_char"))
 
 func show_story(lines: Array):
 	story_lines = lines
@@ -43,17 +46,19 @@ func display_current_line():
 	char_index = 0
 	label.text = ""
 	is_typing = true
-	type_next_char()
+	type_next_char() # 立即开始输出
 
 func type_next_char():
+	# 如果当前正在打字，并且还没打印完这一行，就打印下一个字符
 	if char_index < full_text.length():
 		label.text += full_text[char_index]
 		char_index += 1
+		# 重新启动计时器
 		var timer = $TypingTimer
 		timer.wait_time = printing_speed
 		timer.start()
-		timer.timeout.connect(type_next_char, CONNECT_ONE_SHOT)
 	else:
+		# 完成
 		is_typing = false
 
 func hide_story():

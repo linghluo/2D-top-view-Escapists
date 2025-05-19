@@ -11,14 +11,20 @@ func _ready():
     connect("body_exited", _on_body_exited)
 
 func _on_body_entered(body):
-    if body.name == "player" and not triggered:
-        triggered = true
+    if body.name == "player":
+        if only_trigger_once:
+            if triggered:
+                return
+            triggered = true
+        elif not triggered:
+            triggered = true
+
         var ui = get_tree().get_root().get_node("Main/CanvasLayer/storyUI")
         if ui:
             ui.show_story(story_lines)
 
 func _on_body_exited(body):
-    if body.name == "player":
+    if body.name == "player" and not only_trigger_once:
         var ui = get_tree().get_root().get_node("Main/CanvasLayer/storyUI")
         if ui:
             ui.hide_story()

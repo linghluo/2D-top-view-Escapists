@@ -7,7 +7,7 @@ uniform vec4 base_edge_color : source_color = vec4(0.0, 0.0, 0.0, 1.0);
 uniform float edge_thickness = 3.0;
 uniform float jitter_strength = 10.0;
 uniform float noise_speed = 2.0;
-uniform float pixel_noise_amount = 5;
+uniform float pixel_noise_amount = 5.0;
 
 vec3 rgb2hsv(vec3 c) {
     float maxc = max(c.r, max(c.g, c.b));
@@ -36,53 +36,51 @@ float hue_diff(float h1, float h2) {
     return min(d, 1.0 - d);
 }
 
+float edge_detect(vec2 uv, float thickness) {
+    vec2 screen_size = vec2(textureSize(SCREEN_TEXTURE, 0));
+    float dx = thickness / screen_size.x;
+    float dy = thickness / screen_size.y;
+
+    vec3 c = rgb2hsv(texture(SCREEN_TEXTURE, uv).rgb);
+    float diff = 0.0;
+
+    for (int i = -1; i <= 1; i++) {
+        for (int j = -1; j <= 1; j++) {
+            if (i == 0 && j == 0) continue;
+            vec3 n = rgb2hsv(texture(SCREEN_TEXTURE, uv + vec2(float(i) * dx, float(j) * dy)).rgb);
+            float dh = hue_diff(c.x, n.x);
+            float ds = abs(c.y - n.y);
+            float dv = abs(c.z - n.z);
+            diff += 0.5 * dh + 0.3 * ds + 0.2 * dv;
+        }
+    }
+
+    // 直接返回是否超过阈值（0 或 1）
+    return diff > edge_threshold ? 1.0 : 0.0;
+}
+
 void fragment() {
     vec2 screen_size = vec2(textureSize(SCREEN_TEXTURE, 0));
     vec2 uv = SCREEN_UV;
 
-    // 加强波动晃动幅度
+    // 仅在高警戒时启用抖动逻辑，这里始终保留抖动，但如果不想要可设为 0
     float wave = sin(TIME * 3.5 + uv.y * 80.0) * jitter_strength / screen_size.x;
     float wave_y = cos(TIME * 4.0 + uv.x * 90.0) * jitter_strength / screen_size.y;
     uv += vec2(wave, wave_y);
 
-    float noise = (fract(sin(dot(uv * TIME * noise_speed, vec2(12.9898,78.233))) * 43758.5453) - 0.5) * pixel_noise_amount;
+    float noise = (fract(sin(dot(uv * TIME * noise_speed, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) * pixel_noise_amount;
     uv += vec2(noise / screen_size.x, noise / screen_size.y);
 
-    float dx = edge_thickness / screen_size.x;
-    float dy = edge_thickness / screen_size.y;
-
-    vec3 c  = texture(SCREEN_TEXTURE, uv).rgb;
-    vec3 hsv_c  = rgb2hsv(c);
-
-    vec3 neighbors[8];
-    neighbors[0] = rgb2hsv(texture(SCREEN_TEXTURE, uv + vec2(-dx, -dy)).rgb);
-    neighbors[1] = rgb2hsv(texture(SCREEN_TEXTURE, uv + vec2(0.0, -dy)).rgb);
-    neighbors[2] = rgb2hsv(texture(SCREEN_TEXTURE, uv + vec2(dx, -dy)).rgb);
-    neighbors[3] = rgb2hsv(texture(SCREEN_TEXTURE, uv + vec2(-dx, 0.0)).rgb);
-    neighbors[4] = rgb2hsv(texture(SCREEN_TEXTURE, uv + vec2(dx, 0.0)).rgb);
-    neighbors[5] = rgb2hsv(texture(SCREEN_TEXTURE, uv + vec2(-dx, dy)).rgb);
-    neighbors[6] = rgb2hsv(texture(SCREEN_TEXTURE, uv + vec2(0.0, dy)).rgb);
-    neighbors[7] = rgb2hsv(texture(SCREEN_TEXTURE, uv + vec2(dx, dy)).rgb);
-
-    float diff = 0.0;
-    float weight_h = 0.5;
-    float weight_s = 0.3;
-    float weight_v = 0.2;
-
-    for (int i = 0; i < 8; i++) {
-        float dh = hue_diff(hsv_c.x, neighbors[i].x);
-        float ds = abs(hsv_c.y - neighbors[i].y);
-        float dv = abs(hsv_c.z - neighbors[i].z);
-        diff += weight_h * dh + weight_s * ds + weight_v * dv;
-    }
-
-    float brightness_factor = smoothstep(0.0, 0.4, hsv_c.z);
-    float edge_strength = smoothstep(edge_threshold, edge_threshold + 0.1, diff) * brightness_factor;
-
+    // 读取原始颜色
     vec4 base_col = texture(SCREEN_TEXTURE, uv);
 
-    vec3 animated_edge_color = base_edge_color.rgb + 0.1 * sin(TIME * 3.0 + vec3(uv * 15.0, 0.0));
-    animated_edge_color = clamp(animated_edge_color, 0.0, 1.0);
+    // 检测边缘（0.0 或 1.0）
+    float is_edge = edge_detect(uv, edge_thickness);
 
-    COLOR = mix(base_col, vec4(animated_edge_color, 1.0), edge_strength);
+    // 如果是边缘像素，就输出黑色；否则保持原色
+    if (is_edge > 0.5) {
+        COLOR = base_edge_color;
+    } else {
+        COLOR = base_col;
+    }
 }
