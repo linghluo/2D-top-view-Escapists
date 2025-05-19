@@ -3,11 +3,11 @@ extends CharacterBody2D
 # 信号
 signal player_respawned # 玩家重生信号（目前只有enemy接受）
 
-@export var normal_speed: float = 120.0 # 正常行走速度
-@export var sneak_speed: float = 60.0 # 潜行行走速度
+@export var normal_speed: float = 100.0 # 正常行走速度
+@export var sneak_speed: float = 50.0 # 潜行行走速度
 @export var dash_speed: float = 1000.0 # 冲刺速度（像素/秒）
 @export var dash_distance: float = 150.0 # 冲刺固定距离（像素）
-@export var dash_charge_time: float = 1.0 # 蓄力时长（秒）
+@export var dash_charge_time: float = 0.5 # 蓄力时长（秒）
 @export var dash_cooldown: float = 9.0 # 冲刺冷却（秒）
 @export var ghost_interval: float = 0.02 # 残影生成间隔（秒）
 @onready var water_effect: Sprite2D = $Water_dash # 水波纹效果图
@@ -30,7 +30,12 @@ var has_started_water: bool = false # 是否开始了波纹动画
 var can_downalert: bool = true # 是否允许警觉值下降
 @export var alertness_downspeed: float = 2.0 # 警觉值下降速率 (/秒)
 @export var time_can_downalert_speed: float = 20.0 # 重置可降警戒tag时间
+@export var max_alertness: float = 120.0
+@export var chase_threshold1: float = 40.0
+@export var chase_threshold2: float = 70.0
 var alertness: float = 0.0 # 警觉值
+var visual_alertness: float = 0.0 # 平滑过渡用
+@onready var alertness_effect := $"/root/Main/CanvasLayer/alertness"
 
 # 其他系统相关
 var checkpoint: Vector2 # 重生点
@@ -38,6 +43,17 @@ var dash_timeer: float = 0.0 # 冲刺防卡墙用计时器
 var is_attacking = false # 攻击tag
 var noise_animation_cooldown_timer: float = 0.0
 const NOISE_ANIMATION_COOLDOWN: float = 1.0 # 噪音动画时间限制（/秒）
+
+func _process(delta):
+	var smoothing_speed = 3.0
+	visual_alertness = lerp(visual_alertness, alertness, delta * smoothing_speed)
+
+	if alertness_effect.material and alertness_effect.material is ShaderMaterial:
+		var mat = alertness_effect.material
+		mat.set_shader_parameter("alertness_visual", visual_alertness)
+		mat.set_shader_parameter("max_alertness", max_alertness)
+		mat.set_shader_parameter("threshold1", chase_threshold1)
+		mat.set_shader_parameter("threshold2", chase_threshold2)
 
 # 玩家状态机
 enum State {normal, sneak, dash_change, dash}

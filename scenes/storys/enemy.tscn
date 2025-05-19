@@ -69,39 +69,39 @@ script = ExtResource("1_md0e3")
 
 [node name="RayCast1" type="RayCast2D" parent="."]
 position = Vector2(2, -2)
-target_position = Vector2(306, -83)
+target_position = Vector2(188, -57)
 
 [node name="RayCast2" type="RayCast2D" parent="."]
 position = Vector2(2, 0)
-target_position = Vector2(303, 81)
+target_position = Vector2(189, 63)
 
 [node name="RayCast3" type="RayCast2D" parent="."]
 position = Vector2(-1, -1)
-target_position = Vector2(315, 0)
+target_position = Vector2(194, 2)
 
 [node name="RayCast4" type="RayCast2D" parent="."]
 position = Vector2(1, -1)
-target_position = Vector2(312, -42)
+target_position = Vector2(193, -26)
 
 [node name="RayCast5" type="RayCast2D" parent="."]
 position = Vector2(0, -1)
-target_position = Vector2(313, 43)
+target_position = Vector2(192, 33)
 
 [node name="RayCast6" type="RayCast2D" parent="."]
 position = Vector2(1, -10)
-target_position = Vector2(309, -54)
+target_position = Vector2(192, -35)
 
 [node name="RayCast7" type="RayCast2D" parent="."]
 position = Vector2(2, 4)
-target_position = Vector2(312, 18)
+target_position = Vector2(189, 13)
 
 [node name="RayCast8" type="RayCast2D" parent="."]
 position = Vector2(2, -6)
-target_position = Vector2(312, -16)
+target_position = Vector2(190, -7)
 
 [node name="RayCast9" type="RayCast2D" parent="."]
 position = Vector2(1, 8)
-target_position = Vector2(310, 54)
+target_position = Vector2(189, 38)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-8.76562, -1)
@@ -120,13 +120,12 @@ one_shot = true
 [node name="light" type="Node2D" parent="."]
 
 [node name="PointLight2D" type="PointLight2D" parent="light"]
-position = Vector2(1.00001, -2.49999)
-scale = Vector2(10.1875, 2.98438)
+position = Vector2(5.95313, -3)
+scale = Vector2(6.18896, 2.98438)
 color = Color(1, 0, 0, 0.65098)
 energy = 0.33
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_4ra3w")
-metadata/_edit_lock_ = true
 
 [node name="LightOccluder2D1" type="LightOccluder2D" parent="light"]
 position = Vector2(-118, 9)

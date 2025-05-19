@@ -2,9 +2,9 @@ extends CharacterBody2D
 
 @onready var navigation_agent_2d: NavigationAgent2D = $NavigationAgent2D # 导航代理
 
-@export var normal_speed: float = 60.0 # 正常速度
-@export var chase_speed: float = 60.0 # 追击速度
-@export var search_speed: float = 60.0 # 搜寻速度
+@export var normal_speed: float = 70.0 # 正常速度
+@export var chase_speed: float = 130.0 # 追击速度
+@export var search_speed: float = 110.0 # 搜寻速度
 var max_alertness: float = 120.0 # 最大警觉度
 var chase_threshold1: float = 40.0 # 警戒状态阈值
 var chase_threshold2: float = 70.0 # 追击状态阈值

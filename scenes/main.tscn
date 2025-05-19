@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dukca71mfgm5q"]
+[gd_scene load_steps=16 format=3 uid="uid://dukca71mfgm5q"]
 
 [ext_resource type="Script" uid="uid://bmd0wu4mh3n8u" path="res://script/main.gd" id="1_choun"]
 [ext_resource type="PackedScene" uid="uid://nnf6c1hxa003" path="res://scenes/map.tscn" id="1_jyhfs"]
@@ -11,6 +11,14 @@
 [ext_resource type="PackedScene" uid="uid://dflu8x1inytoa" path="res://scenes/storyUI.tscn" id="4_tefeu"]
 [ext_resource type="PackedScene" uid="uid://dsec6tnqu5fnr" path="res://scenes/storys/camera_area.tscn" id="8_ya4ey"]
 [ext_resource type="Shader" uid="uid://c1da1hevyq553" path="res://shader/main.gdshader" id="9_ya4ey"]
+[ext_resource type="Shader" uid="uid://cwcvlgqh84ism" path="res://shader/main_alertness.gdshader" id="10_eb6dy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_trceg"]
+shader = ExtResource("10_eb6dy")
+shader_parameter/alertness_visual = 0.0
+shader_parameter/max_alertness = 120.0
+shader_parameter/threshold1 = 40.0
+shader_parameter/threshold2 = 70.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eb6dy"]
 shader = ExtResource("9_ya4ey")
@@ -45,7 +53,7 @@ metadata/_edit_lock_ = true
 
 [node name="GlobalLight2D" type="DirectionalLight2D" parent="."]
 color = Color(1, 1, 1, 0.415686)
-energy = 2.31
+energy = 2.3
 blend_mode = 1
 metadata/_edit_lock_ = true
 
@@ -62,7 +70,6 @@ size = Vector2i(11609, 7400)
 render_target_update_mode = 4
 
 [node name="Map" parent="SubContainer/Sub" instance=ExtResource("1_jyhfs")]
-visible = false
 position = Vector2(-2, 256)
 metadata/_edit_lock_ = true
 
@@ -83,12 +90,12 @@ rotation = 1.54462
 [node name="players" type="Node" parent="."]
 
 [node name="player" parent="players" instance=ExtResource("1_o5qli")]
-position = Vector2(44, 577)
+position = Vector2(2983, 584)
 
 [node name="Bonfires" type="Node" parent="."]
 
 [node name="bonfire" parent="Bonfires" instance=ExtResource("2_tefeu")]
-position = Vector2(3121, 846)
+position = Vector2(3124, 847)
 
 [node name="Stories" type="Node" parent="."]
 
@@ -107,24 +114,34 @@ position = Vector2(3087, 575)
 position = Vector2(675.025, 576.805)
 scale = Vector2(7.065, 3.235)
 zoom = Vector2(4, 4)
+metadata/_edit_lock_ = true
 
 [node name="CameraArea2" parent="Camera" instance=ExtResource("8_ya4ey")]
 position = Vector2(1916.67, 575.315)
 scale = Vector2(5.87, 10.605)
+metadata/_edit_lock_ = true
 
 [node name="CameraArea3" parent="Camera" instance=ExtResource("8_ya4ey")]
 position = Vector2(2801, 573)
 scale = Vector2(3.325, 2.87)
 zoom = Vector2(4, 4)
+metadata/_edit_lock_ = true
 
 [node name="CameraArea4" parent="Camera" instance=ExtResource("8_ya4ey")]
-position = Vector2(3534.2, 574)
-scale = Vector2(4.38, 5.195)
+position = Vector2(3536, 556)
+scale = Vector2(4.355, 5.59)
+zoom = Vector2(3, 3)
+metadata/_edit_lock_ = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="storyUI" parent="CanvasLayer" instance=ExtResource("4_tefeu")]
 metadata/_edit_lock_ = true
+
+[node name="alertness" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_trceg")
+offset_right = 1920.0
+offset_bottom = 1080.0
 
 [node name="Sprite_main" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_eb6dy")

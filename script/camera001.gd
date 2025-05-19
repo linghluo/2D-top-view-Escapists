@@ -1,6 +1,7 @@
 extends Camera2D
 
 @export var player_path: NodePath
+@export var speed: float = 0.05
 var player: Node2D
 
 var target_limits: Rect2 = Rect2(0, 0, 1000, 1000)
@@ -33,11 +34,10 @@ func set_camera_area(limits: Rect2, new_zoom: Vector2):
 
 func _process(_delta):
 	# 平滑更新 float
-	_smooth_left = lerp(_smooth_left, target_limits.position.x, 0.1)
-	_smooth_top = lerp(_smooth_top, target_limits.position.y, 0.1)
-	_smooth_right = lerp(_smooth_right, target_limits.position.x + target_limits.size.x, 0.1)
-	_smooth_bottom = lerp(_smooth_bottom, target_limits.position.y + target_limits.size.y, 0.1)
-	print(target_limits, target_zoom)
+	_smooth_left = lerp(_smooth_left, target_limits.position.x, speed)
+	_smooth_top = lerp(_smooth_top, target_limits.position.y, speed)
+	_smooth_right = lerp(_smooth_right, target_limits.position.x + target_limits.size.x, speed)
+	_smooth_bottom = lerp(_smooth_bottom, target_limits.position.y + target_limits.size.y, speed)
 	# 取整赋值（非得int是吧）
 	limit_left = int(_smooth_left)
 	limit_top = int(_smooth_top)
@@ -45,7 +45,7 @@ func _process(_delta):
 	limit_bottom = int(_smooth_bottom)
 
 	# 平滑缩放
-	zoom = zoom.lerp(target_zoom, 0.1)
+	zoom = zoom.lerp(target_zoom, speed)
 
 	if player:
 		var pos = player.global_position
