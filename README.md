@@ -1,25 +1,48 @@
-# 🎮 2D Top-View Escapists
+<h1>🎮 2D Top-View Escapists--前行潜行者</h1>
 
-俯视角潜行类游戏，玩家需要在关卡中避开敌人的视线，巧妙潜行、暗杀敌人并逃离现场。
+一款俯视角潜行类游戏。玩家需巧妙地避开敌人的视线，利用地形与战术进行潜行、冲刺、暗杀，并最终逃离，不，是前进。
 
-## 🧩 游戏机制
+<h1>🧩 游戏特色机制</h1>
 
-- **视野系统**：敌人有带遮挡检测的视锥，可感知玩家。
-- **警戒机制**：敌人警戒值随玩家暴露逐渐增加，达到上限后开始追击。
-- **刺杀系统**：玩家可从敌人背后进行击杀。
-- **墙体遮挡逻辑**：视野被墙体阻挡，增加潜行策略性。
+🔍 视野系统：敌人拥有视锥感知，视野可被墙体阻挡，模拟真实视线。
+
+🚨 警戒机制：敌人警戒值随玩家暴露逐渐升高，达到阈值后将开始警戒，更高则会进行追击。
+
+🗡 刺杀系统：从敌人背后发动攻击可一击击杀。
+
+🧱 墙体遮挡：地形遮挡提供潜行与绕行的可能性。
+
+💨 冲刺系统：玩家可蓄力后向鼠标方向高速冲刺，用于快速穿越视野或躲避追击。
+
+🔊 噪音系统：玩家的行动会制造噪音，敌人对声音敏感。制造声音可以吸引敌人注意，从而诱导其离开关键通道。
+
+<h1>🎮 游戏内截图</h1>
+
+![3083b0c0688c4da688e64b3b73d5bec7](https://github.com/user-attachments/assets/27439c61-deeb-4ef0-a882-7b4ac51431c3)
+
+<h1>⚙️ 环境依赖</h1>
+引擎版本：Godot Engine 4.4.1
+
+编程语言：GDScript
+
+支持平台：Windows / macOS / Linux
+
+<h1>📦 获取项目</h1>
+
+git clone https://github.com/linghluo/2D-top-view-Escapists.git
+
+使用 Godot 打开项目目录即可运行或开发。
+
+<h1>## 👩‍💻 开发者</h1>
+
+| ![玲落](https://github.com/linghluo.png?size=100) | ![梦兰漾溪](https://github.com/Menglanyx.png?size=100) | ![DdzgAv](https://github.com/DdzgAv.png?size=100) |
+|:--:|:--:|:--:|
+| [**玲落**](https://github.com/linghluo) | [**梦兰漾溪**](https://github.com/Menglanyx) | [**DdzgAv**](https://github.com/DdzgAv) |
+| 在做了・在想了 | 在拉取了・在提交了 | 机制建议・特别支持 |
 
 ---
 
-克隆项目仓库：
-    git clone https://github.com/linghluo/2D-top-view-Escapists.git
-
----
-
-## 👩‍💻 开发者
-
-![玲落](https://github.com/linghluo.png?size=40) **玲落** &nbsp;&nbsp;|&nbsp;&nbsp; 
-![梦兰漾溪](https://github.com/Menglanyx.png?size=40) **梦兰漾溪**
+“DdzgAv，代号‘断光’，在背后提供关键机制建议与指引。他是影中的引导者，虽不常露面，却总在关键时刻助一臂之力。”
 
 ---
 
