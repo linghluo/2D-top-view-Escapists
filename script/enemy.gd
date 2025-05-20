@@ -2,9 +2,9 @@ extends CharacterBody2D
 
 @onready var navigation_agent_2d: NavigationAgent2D = $NavigationAgent2D # 导航代理
 
-@export var normal_speed: float = 30.0 # 正常速度
-@export var chase_speed: float = 60.0 # 追击速度
-@export var search_speed: float = 40.0 # 搜寻速度
+@export var normal_speed: float = 80.0 # 正常速度
+@export var chase_speed: float = 125.0 # 追击速度
+@export var search_speed: float = 110.0 # 搜寻速度
 var max_alertness: float = 120.0 # 最大警觉度
 var chase_threshold1: float = 40.0 # 警戒状态阈值
 var chase_threshold2: float = 70.0 # 追击状态阈值
@@ -168,13 +168,11 @@ func move_towards(target_position: Vector2):
 	face_velocity = true
 	navigation_agent_2d.target_position = target_position
 	var next_path_position = navigation_agent_2d.get_next_path_position()
-	if next_path_position != Vector2.ZERO:
-		var direction = global_position.direction_to(next_path_position)
-		velocity = direction * speed # speed是你传入的全局变量或成员变量
-		rotation = velocity.angle()
-		move_and_slide()
+	var new_velocity = global_position.direction_to(next_path_position) * speed
+	if navigation_agent_2d.avoidance_enabled:
+		navigation_agent_2d.set_velocity(new_velocity)
 	else:
-		velocity = Vector2.ZERO
+		_on_navigation_agent_2d_velocity_computed(new_velocity)
 
 # ==== 初始化状态 ====
 

@@ -139,7 +139,6 @@ occluder = SubResource("OccluderPolygon2D_4ra3w")
 path_desired_distance = 5.0
 target_desired_distance = 5.0
 path_postprocessing = 1
-avoidance_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(1, 0.00392157, 0, 1)
 

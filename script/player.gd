@@ -140,7 +140,7 @@ func _physics_process(delta: float) -> void:
 				state = State.normal
 				velocity = Vector2.ZERO
 			# 防卡死
-			elif dash_timeer >= 1.0:
+			elif dash_timeer >= 0.6:
 				dash_timeer = 0.0
 				state = State.normal
 			else:

@@ -216,7 +216,7 @@ rotation = 2.75762
 [node name="players" type="Node" parent="."]
 
 [node name="player" parent="players" instance=ExtResource("1_o5qli")]
-position = Vector2(5480, 2906)
+position = Vector2(86, 575)
 
 [node name="Bonfires" type="Node" parent="."]
 
