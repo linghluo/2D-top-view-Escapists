@@ -126,13 +126,17 @@ position = Vector2(6080, 2340)
 rotation = 3.19395
 
 [node name="Enemy15" parent="Enemies" instance=ExtResource("2_0wfyh")]
-position = Vector2(6243, 1938)
+position = Vector2(5342, 1635)
+rotation = 1.22522
 
 [node name="Enemy16" parent="Enemies" instance=ExtResource("2_0wfyh")]
-position = Vector2(6787, 1964)
+position = Vector2(4852, 1957)
+rotation = 3.0648
+random_turn_enabled = true
 
 [node name="Enemy17" parent="Enemies" instance=ExtResource("2_0wfyh")]
-position = Vector2(7163, 2029)
+position = Vector2(4388, 1988)
+rotation = 2.58309
 
 [node name="Enemy18" parent="Enemies" instance=ExtResource("2_0wfyh")]
 position = Vector2(7696, 2062)
@@ -140,7 +144,7 @@ position = Vector2(7696, 2062)
 [node name="players" type="Node" parent="."]
 
 [node name="player" parent="players" instance=ExtResource("1_o5qli")]
-position = Vector2(3855, 752)
+position = Vector2(4918, 2051)
 
 [node name="Bonfires" type="Node" parent="."]
 
@@ -212,7 +216,59 @@ story_lines = Array[String](["=潜行=小心避开他们吧"])
 only_trigger_once = true
 
 [node name="StoryTrigger_15" parent="Stories" instance=ExtResource("2_o6xl0")]
-position = Vector2(4737, 991)
+position = Vector2(4414, 767)
+story_lines = Array[String](["我将给予你攻击的能力 ..", "摁下 鼠标左键"])
+
+[node name="StoryTrigger_16" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(4542, 1152)
+story_lines = Array[String](["他们背后是脆弱的..", "或许你可以悄悄接近..", "然后出手"])
+
+[node name="StoryTrigger_17" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(4542, 1601)
+story_lines = Array[String](["选好路线是必要的..", "从背后出手吧！"])
+
+[node name="StoryTrigger_18" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(4478, 1792)
+story_lines = Array[String](["是死路呢..", "但 多走走岔路并不一定是坏事 "])
+
+[node name="StoryTrigger_19" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(5374, 1504)
+story_lines = Array[String](["时刻小心"])
+only_trigger_once = true
+
+[node name="StoryTrigger_20" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(5038, 2033)
+scale = Vector2(1.52, 1.52)
+story_lines = Array[String](["出现会转头巡视的机器人了..", "找准时机 ..", "我相信你"])
+only_trigger_once = true
+
+[node name="StoryTrigger_21" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(4062, 1504)
+story_lines = Array[String](["若前路难行..", "不妨试试别的路径？"])
+
+[node name="StoryTrigger_22" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(3934, 1728)
+story_lines = Array[String](["路 不只一条..", "不论何地..", "不论何时"])
+
+[node name="StoryTrigger_23" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(3677, 2208)
+story_lines = Array[String](["或许你早就注意到身上发光的印记吧..", "这是我给予你的能力 "])
+
+[node name="StoryTrigger_24" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(3679, 2336)
+story_lines = Array[String](["摁住 “shift” 即可进行蓄力..", "蓄力完成后，松开即可冲刺 "])
+
+[node name="StoryTrigger_25" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(3678, 2464)
+story_lines = Array[String](["冷却完成后，你会再一次获得能量..", "你的身体将会再一次绽放光芒"])
+
+[node name="StoryTrigger_26" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(3678, 2593)
+story_lines = Array[String](["冲刺可以快速移动..", "以免于在敌人视线里停留太久..", "保持耐心"])
+
+[node name="StoryTrigger_27" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(4222, 2689)
+story_lines = Array[String](["不要着急..", "我会配着你的"])
 
 [node name="Checkpoints" type="Node" parent="."]
 
@@ -240,6 +296,13 @@ position = Vector2(4712, 2688)
 
 [node name="checkpoint7" parent="Checkpoints" instance=ExtResource("3_tipki")]
 position = Vector2(5297, 2689)
+
+[node name="checkpoint8" parent="Checkpoints" instance=ExtResource("3_tipki")]
+position = Vector2(5375, 1556)
+rotation = 1.5324
+
+[node name="checkpoint9" parent="Checkpoints" instance=ExtResource("3_tipki")]
+position = Vector2(3928, 1488)
 
 [node name="Camera" type="Node" parent="."]
 

@@ -23,8 +23,8 @@ polygon = PackedVector2Array(115, -8, 109, -11, 144, -4)
 polygon = PackedVector2Array(-14, 12, 21, 4, -17, 15)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_md0e3"]
-radius = 1.0
-height = 32.0
+radius = 7.0
+height = 40.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ra3w"]
 size = Vector2(16, 40)
@@ -146,13 +146,13 @@ debug_path_custom_color = Color(1, 0.00392157, 0, 1)
 [node name="Hurtbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2(-18, 0)
+position = Vector2(-17, -1)
 shape = SubResource("CapsuleShape2D_md0e3")
 
 [node name="Hitbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(-2, -1)
+position = Vector2(8, 0)
 shape = SubResource("RectangleShape2D_4ra3w")
 
 [node name="DeathParticles" type="GPUParticles2D" parent="."]

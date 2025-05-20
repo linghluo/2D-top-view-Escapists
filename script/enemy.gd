@@ -313,16 +313,15 @@ func die():
 		return
 	is_dead = true
 
-	# 播放死亡粒子效果动画
 	$DeathParticles.restart()
 	$DeathParticles.emitting = true
-	print($DeathParticles)
 
-	# 消失
 	$light/PointLight2D.color = Color(0.6157, 0.5373, 0.0, 0.6509)
-	$CollisionShape2D.set_deferred("disabled", true)
-	$Hitbox.set_deferred("monitoring", false)
-	$Hitbox.set_deferred("monitorable", false)
-	$Hurtbox.set_deferred("monitoring", false)
-	$Hurtbox.set_deferred("monitorable", false)
-	call_deferred("set_physics_process", false)
+
+	$CollisionShape2D.disabled = true
+	$Hitbox.monitoring = false
+	$Hitbox.monitorable = false
+	$Hurtbox.monitoring = false
+	$Hurtbox.monitorable = false
+
+	set_physics_process(false) # 立即停止物理帧处理
