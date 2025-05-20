@@ -6,9 +6,9 @@ signal player_respawned # 玩家重生信号（目前只有enemy接受）
 @export var normal_speed: float = 100.0 # 正常行走速度
 @export var sneak_speed: float = 50.0 # 潜行行走速度
 @export var dash_speed: float = 1000.0 # 冲刺速度（像素/秒）
-@export var dash_distance: float = 150.0 # 冲刺固定距离（像素）
+@export var dash_distance: float = 200.0 # 冲刺固定距离（像素）
 @export var dash_charge_time: float = 0.5 # 蓄力时长（秒）
-@export var dash_cooldown: float = 5.0 # 冲刺冷却（秒）
+@export var dash_cooldown: float = 12.0 # 冲刺冷却（秒）
 @export var ghost_interval: float = 0.02 # 残影生成间隔（秒）
 @onready var water_effect: Sprite2D = $Water_dash # 水波纹效果图
 @onready var dash_ready_icon: Sprite2D = $Cooling_dash # 冲刺准备完成图标
@@ -28,7 +28,7 @@ var has_started_water: bool = false # 是否开始了波纹动画
 
 # 警觉值相关系统
 var can_downalert: bool = true # 是否允许警觉值下降
-@export var alertness_downspeed: float = 2.0 # 警觉值下降速率 (/秒)
+@export var alertness_downspeed: float = 5.0 # 警觉值下降速率 (/秒)
 @export var time_can_downalert_speed: float = 20.0 # 重置可降警戒tag时间
 @export var max_alertness: float = 120.0
 @export var chase_threshold1: float = 40.0
@@ -87,7 +87,7 @@ func _physics_process(delta: float) -> void:
 			velocity = dir * normal_speed
 			# 正常行走噪音
 			if dir != Vector2.ZERO:
-				make_noise(global_position, 8.0, 200.0)
+				make_noise(global_position, 10.0, 200.0)
 			if Input.is_action_pressed("p_sneak"):
 				state = State.sneak
 			elif Input.is_action_just_pressed("p_dash") and dash_timer <= 0.0:
@@ -140,7 +140,7 @@ func _physics_process(delta: float) -> void:
 				state = State.normal
 				velocity = Vector2.ZERO
 			# 防卡死
-			elif dash_timeer >= 0.5:
+			elif dash_timeer >= 1.0:
 				dash_timeer = 0.0
 				state = State.normal
 			else:
@@ -171,7 +171,12 @@ func _physics_process(delta: float) -> void:
 			$Hitbox.set_deferred("monitoring", true)
 			$Hitbox.set_deferred("monitorable", true)
 			play_attack_effect()
-	
+	# 露出破绽！
+	if Input.is_action_just_pressed("p_show"):
+		if alertness < 60:
+			alertness = 60
+			can_downalert = true
+
 	# 朝向鼠标
 	face_mouse(delta)
 

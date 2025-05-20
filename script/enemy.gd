@@ -3,7 +3,7 @@ extends CharacterBody2D
 @onready var navigation_agent_2d: NavigationAgent2D = $NavigationAgent2D # 导航代理
 
 @export var normal_speed: float = 70.0 # 正常速度
-@export var chase_speed: float = 130.0 # 追击速度
+@export var chase_speed: float = 150.0 # 追击速度
 @export var search_speed: float = 110.0 # 搜寻速度
 var max_alertness: float = 120.0 # 最大警觉度
 var chase_threshold1: float = 40.0 # 警戒状态阈值
@@ -37,7 +37,7 @@ var restart_searching: bool = false # 重置搜寻状态
 # 状态机
 enum State {initalize, chasing, searching, alert, dead}
 var state = State.initalize # 初始化状态机
-var is_dead # 判断自身是否死亡
+var is_dead = false # 判断自身是否死亡
 
 var time_since_last_noise: float = 0.0 # 记录进入alert状态后没有收到噪音的时间
 
@@ -95,7 +95,7 @@ func _physics_process(delta):
 			loss_vision(delta)
 
 		State.alert:
-			speed = normal_speed
+			speed = search_speed
 			# 计时
 			time_since_last_noise += delta
 			# 听到噪音间隔
@@ -149,6 +149,8 @@ func alert_up(delta: float):
 
 # 接受噪音方法
 func hear_noise(noise_position: Vector2, noise_strength: float, noise_radius: float):
+	if is_dead:
+		return
 	var distance = global_position.distance_to(noise_position)
 	if distance < noise_radius:
 		player.alertness += 0.017 * noise_strength

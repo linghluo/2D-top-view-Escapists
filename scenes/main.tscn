@@ -105,10 +105,42 @@ rotation = 3.60585
 position = Vector2(3735, 1677)
 random_turn_enabled = true
 
+[node name="Enemy10" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(3867, 2540)
+rotation = 1.54462
+
+[node name="Enemy11" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(4096, 2831)
+rotation = -1.54462
+
+[node name="Enemy12" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(4333, 2618)
+rotation = 1.54462
+
+[node name="Enemy13" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(4519, 2760)
+rotation = -1.54462
+
+[node name="Enemy14" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(6080, 2340)
+rotation = 3.19395
+
+[node name="Enemy15" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(6243, 1938)
+
+[node name="Enemy16" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(6787, 1964)
+
+[node name="Enemy17" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(7163, 2029)
+
+[node name="Enemy18" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(7696, 2062)
+
 [node name="players" type="Node" parent="."]
 
 [node name="player" parent="players" instance=ExtResource("1_o5qli")]
-position = Vector2(1876, 578)
+position = Vector2(3855, 752)
 
 [node name="Bonfires" type="Node" parent="."]
 
@@ -174,10 +206,40 @@ story_lines = Array[String](["大范围的圆圈是你发出的噪音..", "不�
 position = Vector2(2813, 576)
 story_lines = Array[String](["摁住“space”进入=潜行=姿态..", "这将极大减少你发出的噪音"])
 
+[node name="StoryTrigger_14" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(3198, 576)
+story_lines = Array[String](["=潜行=小心避开他们吧"])
+only_trigger_once = true
+
+[node name="StoryTrigger_15" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(4737, 991)
+
 [node name="Checkpoints" type="Node" parent="."]
 
 [node name="checkpoint" parent="Checkpoints" instance=ExtResource("3_tipki")]
 position = Vector2(3034, 577)
+
+[node name="checkpoint2" parent="Checkpoints" instance=ExtResource("3_tipki")]
+position = Vector2(4031, 767)
+
+[node name="checkpoint3" parent="Checkpoints" instance=ExtResource("3_tipki")]
+position = Vector2(4543, 1326)
+rotation = 1.5708
+
+[node name="checkpoint4" parent="Checkpoints" instance=ExtResource("3_tipki")]
+position = Vector2(3679, 2160)
+rotation = 1.5708
+
+[node name="checkpoint5" parent="Checkpoints" instance=ExtResource("3_tipki")]
+position = Vector2(3677, 2680)
+rotation = 0.747001
+scale = Vector2(1.05, 1.28)
+
+[node name="checkpoint6" parent="Checkpoints" instance=ExtResource("3_tipki")]
+position = Vector2(4712, 2688)
+
+[node name="checkpoint7" parent="Checkpoints" instance=ExtResource("3_tipki")]
+position = Vector2(5297, 2689)
 
 [node name="Camera" type="Node" parent="."]
 
@@ -214,6 +276,30 @@ position = Vector2(4506, 1760.44)
 scale = Vector2(9.965, 6.415)
 metadata/_edit_lock_ = true
 
+[node name="CameraArea7" parent="Camera" instance=ExtResource("8_ya4ey")]
+position = Vector2(3674, 2433)
+scale = Vector2(1.84, 6.535)
+zoom = Vector2(4, 4)
+metadata/_edit_lock_ = true
+
+[node name="CameraArea8" parent="Camera" instance=ExtResource("8_ya4ey")]
+position = Vector2(4194, 2690)
+scale = Vector2(4.645, 3.475)
+zoom = Vector2(3, 3)
+metadata/_edit_lock_ = true
+
+[node name="CameraArea9" parent="Camera" instance=ExtResource("8_ya4ey")]
+position = Vector2(5006, 2692)
+scale = Vector2(4.13, 3.165)
+zoom = Vector2(4, 4)
+metadata/_edit_lock_ = true
+
+[node name="CameraArea10" parent="Camera" instance=ExtResource("8_ya4ey")]
+position = Vector2(6400, 2850)
+scale = Vector2(10.655, 12.755)
+zoom = Vector2(1.5, 1.5)
+metadata/_edit_lock_ = true
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="storyUI" parent="CanvasLayer" instance=ExtResource("4_tefeu")]
@@ -226,6 +312,7 @@ offset_bottom = 1080.0
 
 [node name="Sprite_main" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_eb6dy")
+scale = Vector2(1.5, 1.5)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(409, 107)

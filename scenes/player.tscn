@@ -1,8 +1,8 @@
 [gd_scene load_steps=21 format=3 uid="uid://bq3vftd4hwv26"]
 
 [ext_resource type="Script" uid="uid://bchgnsj8l8aqe" path="res://script/player.gd" id="1_g2brh"]
-[ext_resource type="Texture2D" uid="uid://bh0arcprifcq5" path="res://icon.svg" id="1_lj8jo"]
 [ext_resource type="Shader" uid="uid://cdg1d1knr0jvy" path="res://shader/player_Afterimage.gdshader" id="2_qhqgy"]
+[ext_resource type="Texture2D" uid="uid://dd0n0upjtj0ox" path="res://src/texture/player.png" id="3_smehm"]
 [ext_resource type="Shader" uid="uid://dwtsx4ytsjjs8" path="res://shader/Water_dash.gdshader" id="4_fjrip"]
 [ext_resource type="Texture2D" uid="uid://3edcpkyy051q" path="res://src/shader_src/Water_effect.png" id="5_smehm"]
 [ext_resource type="Shader" uid="uid://beflbtfvtf0qo" path="res://shader/Cooling_dash.gdshader" id="6_ur7pv"]
@@ -63,15 +63,13 @@ script = ExtResource("1_g2brh")
 [node name="AfterImage" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_qhqgy")
 scale = Vector2(0.146, 0.146)
-texture = ExtResource("1_lj8jo")
 metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 use_parent_material = true
-position = Vector2(1, 1.90735e-06)
-scale = Vector2(0.1958, 0.189453)
-texture = ExtResource("1_lj8jo")
-metadata/_edit_lock_ = true
+position = Vector2(-9, 2.27374e-13)
+scale = Vector2(-0.025, 0.025)
+texture = ExtResource("3_smehm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.32, 0.32)
@@ -119,7 +117,7 @@ texture = ExtResource("5_smehm")
 [node name="Attack" type="Sprite2D" parent="."]
 visible = false
 material = SubResource("ShaderMaterial_ur7pv")
-position = Vector2(14.8536, 0.499999)
+position = Vector2(5.68434e-14, -16)
 scale = Vector2(32.2929, 31)
 texture = SubResource("CanvasTexture_smehm")
 
