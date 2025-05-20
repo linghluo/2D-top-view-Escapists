@@ -69,6 +69,10 @@ handle_input_locally = false
 size = Vector2i(11609, 7400)
 render_target_update_mode = 4
 
+[node name="Map" parent="SubContainer/Sub" instance=ExtResource("1_jyhfs")]
+modulate = Color(1, 1, 1, 0.537255)
+position = Vector2(-2, 256)
+
 [node name="Enemies" type="Node" parent="."]
 
 [node name="Enemy" parent="Enemies" instance=ExtResource("2_0wfyh")]
@@ -139,12 +143,79 @@ position = Vector2(4388, 1988)
 rotation = 2.58309
 
 [node name="Enemy18" parent="Enemies" instance=ExtResource("2_0wfyh")]
-position = Vector2(7696, 2062)
+position = Vector2(7228, 2295)
+rotation = -1.5708
+
+[node name="Enemy19" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(6226, 2205)
+rotation = 2.79253
+
+[node name="Enemy20" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(7087, 2524)
+random_turn_enabled = true
+
+[node name="Enemy21" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(6430, 2474)
+rotation = 4.70017
+random_turn_enabled = true
+
+[node name="Enemy22" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(6913, 2332)
+rotation = -1.5708
+
+[node name="Enemy23" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(7071, 2337)
+rotation = -1.5708
+
+[node name="Enemy24" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(7147, 2805)
+rotation = 1.12399
+
+[node name="Enemy25" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(6908, 2812)
+rotation = 1.11352
+random_turn_enabled = true
+
+[node name="Enemy26" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(6920, 2645)
+random_turn_enabled = true
+
+[node name="Enemy27" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(6426, 2861)
+random_turn_enabled = true
+
+[node name="Enemy28" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(5923, 3349)
+rotation = 3.57618
+
+[node name="Enemy29" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(6056, 3051)
+rotation = 2.82394
+
+[node name="Enemy30" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(6448, 3236)
+rotation = 1.63537
+
+[node name="Enemy31" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(6321, 3293)
+rotation = -1.94081
+
+[node name="Enemy32" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(6954, 3294)
+rotation = 2.56912
+
+[node name="Enemy33" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(7101, 3132)
+rotation = 1.50447
+
+[node name="Enemy34" parent="Enemies" instance=ExtResource("2_0wfyh")]
+position = Vector2(7330, 3284)
+rotation = 2.75762
 
 [node name="players" type="Node" parent="."]
 
 [node name="player" parent="players" instance=ExtResource("1_o5qli")]
-position = Vector2(4918, 2051)
+position = Vector2(89, 578)
 
 [node name="Bonfires" type="Node" parent="."]
 
@@ -171,7 +242,7 @@ story_lines = Array[String](["抵达最深处的房间"])
 
 [node name="StoryTrigger_4" parent="Stories" instance=ExtResource("2_o6xl0")]
 position = Vector2(926, 575)
-story_lines = Array[String](["杀死魔王.."])
+story_lines = Array[String](["杀死魔王.. "])
 
 [node name="StoryTrigger_5" parent="Stories" instance=ExtResource("2_o6xl0")]
 position = Vector2(2974, 576)
@@ -270,6 +341,35 @@ story_lines = Array[String](["冲刺可以快速移动..", "以免于在敌人�
 position = Vector2(4222, 2689)
 story_lines = Array[String](["不要着急..", "我会配着你的"])
 
+[node name="StoryTrigger_28" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(4862, 2688)
+story_lines = Array[String]([" 知彼知己，百战不殆..", "你已经足够了解自己了..", "我将为你介绍这些机关"])
+
+[node name="StoryTrigger_29" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(5150, 2688)
+story_lines = Array[String](["机关存在警戒值系统..", "而黄色 代表警戒状态..", "在这个状态下，敌人会对噪音敏感..", "总是想去噪音发出的位置查看"])
+
+[node name="StoryTrigger_30" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(5598, 2688)
+story_lines = Array[String](["  利用敌人查看噪音源的好奇心..", "调离他们吧"])
+
+[node name="StoryTrigger_31" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(5758, 2304)
+story_lines = Array[String](["似乎无法通过？..", "还记得吗..", "”路 不只一条“"])
+metadata/_edit_lock_ = true
+
+[node name="StoryTrigger_32" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(6046, 2688)
+story_lines = Array[String](["为了让敌人对噪音敏感..", "卖个破绽吧..", "摁下“ALT”键就可以卖个破绽"])
+
+[node name="StoryTrigger_33" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(6046, 2495)
+story_lines = Array[String](["机器人的路线是定好的..", "即使是面前这堵已然破碎的墙..", "或许你可以利用它？"])
+
+[node name="StoryTrigger_34" parent="Stories" instance=ExtResource("2_o6xl0")]
+position = Vector2(7806, 3457)
+story_lines = Array[String](["开篇的故事就到这里了..", "想要打败我..", "这点考验 还远远不够"])
+
 [node name="Checkpoints" type="Node" parent="."]
 
 [node name="checkpoint" parent="Checkpoints" instance=ExtResource("3_tipki")]
@@ -303,6 +403,25 @@ rotation = 1.5324
 
 [node name="checkpoint9" parent="Checkpoints" instance=ExtResource("3_tipki")]
 position = Vector2(3928, 1488)
+
+[node name="checkpoint10" parent="Checkpoints" instance=ExtResource("3_tipki")]
+position = Vector2(6641, 2450)
+rotation = 1.5708
+
+[node name="checkpoint11" parent="Checkpoints" instance=ExtResource("3_tipki")]
+position = Vector2(7492, 3455)
+
+[node name="checkpoint12" parent="Checkpoints" instance=ExtResource("3_tipki")]
+position = Vector2(5472, 3376)
+rotation = 1.5708
+
+[node name="checkpoint13" parent="Checkpoints" instance=ExtResource("3_tipki")]
+position = Vector2(5469, 2994)
+rotation = 1.5708
+
+[node name="checkpoint14" parent="Checkpoints" instance=ExtResource("3_tipki")]
+position = Vector2(7347, 2769)
+rotation = 1.5708
 
 [node name="Camera" type="Node" parent="."]
 
@@ -363,6 +482,11 @@ scale = Vector2(10.655, 12.755)
 zoom = Vector2(1.5, 1.5)
 metadata/_edit_lock_ = true
 
+[node name="CameraArea11" parent="Camera" instance=ExtResource("8_ya4ey")]
+position = Vector2(7684, 3458)
+scale = Vector2(3.02, 3.13)
+zoom = Vector2(5, 5)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="storyUI" parent="CanvasLayer" instance=ExtResource("4_tefeu")]
@@ -381,6 +505,8 @@ scale = Vector2(1.5, 1.5)
 position = Vector2(409, 107)
 script = ExtResource("4_jyhfs")
 player_path = NodePath("../players/player")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_jyhfs")
