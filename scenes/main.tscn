@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dukca71mfgm5q"]
+[gd_scene load_steps=17 format=3 uid="uid://dukca71mfgm5q"]
 
 [ext_resource type="Script" uid="uid://bmd0wu4mh3n8u" path="res://script/main.gd" id="1_choun"]
 [ext_resource type="PackedScene" uid="uid://nnf6c1hxa003" path="res://scenes/map.tscn" id="1_jyhfs"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dsec6tnqu5fnr" path="res://scenes/storys/camera_area.tscn" id="8_ya4ey"]
 [ext_resource type="Shader" uid="uid://c1da1hevyq553" path="res://shader/main.gdshader" id="9_ya4ey"]
 [ext_resource type="Shader" uid="uid://cwcvlgqh84ism" path="res://shader/main_alertness.gdshader" id="10_eb6dy"]
+[ext_resource type="AudioStream" uid="uid://d4gg2u12hqbfs" path="res://src/music/mian_music.mp3" id="13_trceg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_trceg"]
 shader = ExtResource("10_eb6dy")
@@ -507,6 +508,7 @@ script = ExtResource("4_jyhfs")
 player_path = NodePath("../players/player")
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_trceg")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_jyhfs")

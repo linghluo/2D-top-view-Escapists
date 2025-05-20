@@ -14,6 +14,7 @@ config/name="2D Top-View Escapists"
 run/main_scene="uid://dukca71mfgm5q"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="uid://olmnyf07uanc"
+config/windows_native_icon="res://icon.ico"
 
 [display]
 
