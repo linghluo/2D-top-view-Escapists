@@ -254,7 +254,6 @@ func play_attack_effect():
 func _on_attack_effect_finished():
 	attack_effect.visible = false
 
-
 # 残影相关
 func spawn_afterimage() -> void:
 	var afterimage = $AfterImage.duplicate() as Sprite2D

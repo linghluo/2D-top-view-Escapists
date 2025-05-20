@@ -111,6 +111,7 @@ metadata/_edit_lock_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(1e-05, 1e-05)
 shape = SubResource("CircleShape2D_md0e3")
+disabled = true
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.05
@@ -139,7 +140,6 @@ path_desired_distance = 5.0
 target_desired_distance = 5.0
 path_postprocessing = 1
 avoidance_enabled = true
-debug_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(1, 0.00392157, 0, 1)
 

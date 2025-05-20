@@ -2,9 +2,9 @@ extends CharacterBody2D
 
 @onready var navigation_agent_2d: NavigationAgent2D = $NavigationAgent2D # 导航代理
 
-@export var normal_speed: float = 70.0 # 正常速度
-@export var chase_speed: float = 150.0 # 追击速度
-@export var search_speed: float = 110.0 # 搜寻速度
+@export var normal_speed: float = 30.0 # 正常速度
+@export var chase_speed: float = 60.0 # 追击速度
+@export var search_speed: float = 40.0 # 搜寻速度
 var max_alertness: float = 120.0 # 最大警觉度
 var chase_threshold1: float = 40.0 # 警戒状态阈值
 var chase_threshold2: float = 70.0 # 追击状态阈值
@@ -168,11 +168,13 @@ func move_towards(target_position: Vector2):
 	face_velocity = true
 	navigation_agent_2d.target_position = target_position
 	var next_path_position = navigation_agent_2d.get_next_path_position()
-	var new_velocity = global_position.direction_to(next_path_position) * speed
-	if navigation_agent_2d.avoidance_enabled:
-		navigation_agent_2d.set_velocity(new_velocity)
+	if next_path_position != Vector2.ZERO:
+		var direction = global_position.direction_to(next_path_position)
+		velocity = direction * speed # speed是你传入的全局变量或成员变量
+		rotation = velocity.angle()
+		move_and_slide()
 	else:
-		_on_navigation_agent_2d_velocity_computed(new_velocity)
+		velocity = Vector2.ZERO
 
 # ==== 初始化状态 ====
 
@@ -270,6 +272,7 @@ func _on_player_respawned():
 	call_deferred("set_physics_process", true)
 	$light/PointLight2D.color = Color(1, 0, 0, 0.65)
 	global_position = initial_position
+	modulate = Color(1, 1, 1, 1)
 	rotation = lerp_angle(rotation, initial_rotation, 0.05)
 	target_rotation = 0.0
 	face_velocity = false
@@ -285,7 +288,6 @@ func _on_player_respawned():
 	navigation_agent_2d.set_velocity(Vector2.ZERO)
 
 	is_dead = false
-	$CollisionShape2D.set_deferred("disabled", false)
 	$DeathParticles.emitting = false
 
 	$Hitbox.set_deferred("monitoring", true)
@@ -313,15 +315,29 @@ func die():
 		return
 	is_dead = true
 
+	state = State.dead
+
 	$DeathParticles.restart()
 	$DeathParticles.emitting = true
 
-	$light/PointLight2D.color = Color(0.6157, 0.5373, 0.0, 0.6509)
+	$Hitbox.set_deferred("monitoring", false)
+	$Hitbox.set_deferred("monitorable", false)
+	$Hurtbox.set_deferred("monitoring", false)
+	$Hurtbox.set_deferred("monitorable", false)
 
-	$CollisionShape2D.disabled = true
-	$Hitbox.monitoring = false
-	$Hitbox.monitorable = false
-	$Hurtbox.monitoring = false
-	$Hurtbox.monitorable = false
+	navigation_agent_2d.target_position = global_position
+	navigation_agent_2d.set_velocity(Vector2.ZERO)
 
-	set_physics_process(false) # 立即停止物理帧处理
+	set_physics_process(false)
+
+	var tween = get_tree().create_tween()
+	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	
+	# 渐隐角色
+	tween.tween_property(self, "modulate:a", 0.0, 1.5)
+	
+	# 渐隐灯光
+	var light = $light/PointLight2D
+	var light_color = light.color
+	tween.tween_property(light, "color", Color(light_color.r, light_color.g, light_color.b, 0.0), 1.5)
+	tween.tween_callback(Callable(self, "_on_fade_out_finished"))

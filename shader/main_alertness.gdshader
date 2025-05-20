@@ -9,20 +9,23 @@ uniform float threshold2 = 70.0; // 红色+抖动
 
 void fragment() {
     vec2 uv = SCREEN_UV;
-    vec2 screen_size = vec2(textureSize(SCREEN_TEXTURE, 0));
     vec2 center = vec2(0.5);
 
     float level = clamp(alertness_visual / max_alertness, 0.0, 1.0);
     vec4 base_color = texture(SCREEN_TEXTURE, uv);
 
-    // 扰动
+    // 调整后的扰动
     vec2 shake_offset = vec2(0.0);
     if (level > threshold2 / max_alertness) {
-        float shake_amt = 0.002; // 轻微抖动
+        float shake_amt = 0.0005; // 大幅度降低抖动量
+        float pulse = abs(sin(TIME * 2.0)); // 抖动强度脉冲
+        float dist_from_center = distance(uv, center);
+        float shake_strength = smoothstep(0.5, 0.7, dist_from_center); // 中心轻微抖动，边缘较强
+
         shake_offset = vec2(
-            sin(TIME * 60.0 + uv.y * 300.0),
-            cos(TIME * 45.0 + uv.x * 250.0)
-        ) * shake_amt;
+            sin(TIME * 15.0 + uv.y * 100.0),
+            cos(TIME * 10.0 + uv.x * 80.0)
+        ) * shake_amt * shake_strength * pulse;
     }
 
     vec4 shaken_color = texture(SCREEN_TEXTURE, uv + shake_offset);
@@ -36,11 +39,9 @@ void fragment() {
     vec3 edge_tint = vec3(0.0);
 
     if (level > threshold2 / max_alertness) {
-        // 红色闪烁边缘
         edge_tint = vec3(1.0, 0.1, 0.1);
         edge_alpha = 0.4 * abs(sin(TIME * 6.0));
     } else if (level > threshold1 / max_alertness) {
-        // 橙色稳定边缘
         edge_tint = vec3(1.0, 0.5, 0.1);
         edge_alpha = 0.25;
     }

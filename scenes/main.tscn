@@ -216,7 +216,7 @@ rotation = 2.75762
 [node name="players" type="Node" parent="."]
 
 [node name="player" parent="players" instance=ExtResource("1_o5qli")]
-position = Vector2(89, 578)
+position = Vector2(90, 578)
 
 [node name="Bonfires" type="Node" parent="."]
 
@@ -226,6 +226,39 @@ scale = Vector2(6, 6)
 
 [node name="bonfire2" parent="Bonfires" instance=ExtResource("2_tefeu")]
 position = Vector2(3124, 844)
+
+[node name="bonfire3" parent="Bonfires" instance=ExtResource("2_tefeu")]
+position = Vector2(3955, 852)
+
+[node name="bonfire4" parent="Bonfires" instance=ExtResource("2_tefeu")]
+position = Vector2(5450, 1583)
+
+[node name="bonfire5" parent="Bonfires" instance=ExtResource("2_tefeu")]
+position = Vector2(3898, 1490)
+
+[node name="bonfire6" parent="Bonfires" instance=ExtResource("2_tefeu")]
+position = Vector2(3611, 2093)
+
+[node name="bonfire7" parent="Bonfires" instance=ExtResource("2_tefeu")]
+position = Vector2(3754, 2770)
+
+[node name="bonfire8" parent="Bonfires" instance=ExtResource("2_tefeu")]
+position = Vector2(5401, 2607)
+
+[node name="bonfire9" parent="Bonfires" instance=ExtResource("2_tefeu")]
+position = Vector2(6641, 2528)
+
+[node name="bonfire10" parent="Bonfires" instance=ExtResource("2_tefeu")]
+position = Vector2(7274, 2768)
+
+[node name="bonfire11" parent="Bonfires" instance=ExtResource("2_tefeu")]
+position = Vector2(5545, 3005)
+
+[node name="bonfire12" parent="Bonfires" instance=ExtResource("2_tefeu")]
+position = Vector2(5405, 3399)
+
+[node name="bonfire13" parent="Bonfires" instance=ExtResource("2_tefeu")]
+position = Vector2(7402, 3515)
 
 [node name="Stories" type="Node" parent="."]
 
@@ -340,7 +373,7 @@ story_lines = Array[String](["冲刺可以快速移动..", "以免于在敌人�
 
 [node name="StoryTrigger_27" parent="Stories" instance=ExtResource("2_o6xl0")]
 position = Vector2(4222, 2689)
-story_lines = Array[String](["不要着急..", "我会配着你的"])
+story_lines = Array[String](["不要着急..", "我会陪着你的"])
 
 [node name="StoryTrigger_28" parent="Stories" instance=ExtResource("2_o6xl0")]
 position = Vector2(4862, 2688)

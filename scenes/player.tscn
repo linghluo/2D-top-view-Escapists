@@ -117,10 +117,9 @@ texture = ExtResource("5_smehm")
 texture = ExtResource("5_smehm")
 
 [node name="Attack" type="Sprite2D" parent="."]
-visible = false
 material = SubResource("ShaderMaterial_ur7pv")
 position = Vector2(5.68434e-14, -16)
-scale = Vector2(32.2929, 31)
+scale = Vector2(28.0645, 27.645)
 texture = SubResource("CanvasTexture_smehm")
 
 [node name="Hurtbox" type="Area2D" parent="."]
