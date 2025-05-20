@@ -216,7 +216,7 @@ rotation = 2.75762
 [node name="players" type="Node" parent="."]
 
 [node name="player" parent="players" instance=ExtResource("1_o5qli")]
-position = Vector2(90, 578)
+position = Vector2(5480, 2906)
 
 [node name="Bonfires" type="Node" parent="."]
 
@@ -446,8 +446,8 @@ rotation = 1.5708
 position = Vector2(7492, 3455)
 
 [node name="checkpoint12" parent="Checkpoints" instance=ExtResource("3_tipki")]
-position = Vector2(5472, 3376)
-rotation = 1.5708
+position = Vector2(5465, 3436)
+rotation = 4.04218
 
 [node name="checkpoint13" parent="Checkpoints" instance=ExtResource("3_tipki")]
 position = Vector2(5469, 2994)
@@ -511,15 +511,24 @@ zoom = Vector2(4, 4)
 metadata/_edit_lock_ = true
 
 [node name="CameraArea10" parent="Camera" instance=ExtResource("8_ya4ey")]
-position = Vector2(6400, 2850)
-scale = Vector2(10.655, 12.755)
+position = Vector2(6400, 2574)
+scale = Vector2(10.655, 8.065)
 zoom = Vector2(1.5, 1.5)
-metadata/_edit_lock_ = true
 
 [node name="CameraArea11" parent="Camera" instance=ExtResource("8_ya4ey")]
 position = Vector2(7684, 3458)
 scale = Vector2(3.02, 3.13)
 zoom = Vector2(5, 5)
+
+[node name="CameraArea12" parent="Camera" instance=ExtResource("8_ya4ey")]
+position = Vector2(5459, 3265)
+scale = Vector2(1.045, 5.35)
+zoom = Vector2(6, 6)
+
+[node name="CameraArea13" parent="Camera" instance=ExtResource("8_ya4ey")]
+position = Vector2(6479, 3275)
+scale = Vector2(9.7, 5.075)
+zoom = Vector2(2.5, 2.5)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

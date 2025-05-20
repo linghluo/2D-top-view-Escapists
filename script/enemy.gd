@@ -294,6 +294,8 @@ func _on_player_respawned():
 	$Hitbox.set_deferred("monitorable", true)
 	$Hurtbox.set_deferred("monitoring", true)
 	$Hurtbox.set_deferred("monitorable", true)
+	$light/LightOccluder2D1.set_deferred("visible", true)
+	$light/LightOccluder2D2.set_deferred("visible", true)
 
 	$Timer.start()
 
@@ -332,7 +334,8 @@ func die():
 
 	var tween = get_tree().create_tween()
 	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	
+	hide_occluders_later()
+
 	# 渐隐角色
 	tween.tween_property(self, "modulate:a", 0.0, 1.5)
 	
@@ -341,3 +344,8 @@ func die():
 	var light_color = light.color
 	tween.tween_property(light, "color", Color(light_color.r, light_color.g, light_color.b, 0.0), 1.5)
 	tween.tween_callback(Callable(self, "_on_fade_out_finished"))
+
+func hide_occluders_later():
+	await get_tree().create_timer(2.3).timeout
+	$light/LightOccluder2D1.set_deferred("visible", false)
+	$light/LightOccluder2D2.set_deferred("visible", false)

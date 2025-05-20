@@ -3,7 +3,7 @@ extends CharacterBody2D
 # 信号
 signal player_respawned # 玩家重生信号（目前只有enemy接受）
 
-@export var normal_speed: float = 100.0 # 正常行走速度
+@export var normal_speed: float = 110.0 # 正常行走速度
 @export var sneak_speed: float = 50.0 # 潜行行走速度
 @export var dash_speed: float = 1000.0 # 冲刺速度（像素/秒）
 @export var dash_distance: float = 200.0 # 冲刺固定距离（像素）
