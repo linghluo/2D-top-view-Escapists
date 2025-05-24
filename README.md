@@ -20,19 +20,6 @@
 
 ![3083b0c0688c4da688e64b3b73d5bec7](https://github.com/user-attachments/assets/27439c61-deeb-4ef0-a882-7b4ac51431c3)
 
-<h1>⚙️ 环境依赖</h1>
-引擎版本：Godot Engine 4.4.1
-
-编程语言：GDScript
-
-支持平台：Windows / macOS / Linux
-
-<h1>📦 获取项目</h1>
-
-git clone https://github.com/linghluo/2D-top-view-Escapists.git
-
-使用 Godot 打开项目目录即可运行或开发。
-
 <h1>## 👩‍💻 开发者</h1>
 
 | ![玲落](https://github.com/linghluo.png?size=100) | ![梦兰漾溪](https://github.com/Menglanyx.png?size=100) | ![DdzgAv](https://github.com/DdzgAv.png?size=100) |
@@ -41,9 +28,20 @@ git clone https://github.com/linghluo/2D-top-view-Escapists.git
 | 在做了・在想了 | 在拉取了・在提交了 | 机制建议・特别支持 |
 
 ---
+<h1>📦 获取项目</h1>
 
-“DdzgAv，代号‘断光’，在背后提供关键机制建议与指引。他是影中的引导者，虽不常露面，却总在关键时刻助一臂之力。”
+```
+git clone https://github.com/linghluo/2D-top-view-Escapists.git
+```
 
----
+<h1>⚙️ 环境依赖</h1>
 
-> 🧊 项目持续开发中，本项目为第一次制作游戏并参加比赛的练习仓库，会慢慢更新完善功能与玩法的 ✨
+引擎版本：Godot Engine 4.4.1
+
+编程语言：GDScript
+
+支持平台：Windows / macOS / Linux
+
+使用 Godot 打开项目目录即可运行或开发。
+
+> 🧊 项目应该是终止开发了，本项目为第一次制作游戏并参加比赛的练习仓库，并没有完善最初设想的全部功能与玩法 ✨
